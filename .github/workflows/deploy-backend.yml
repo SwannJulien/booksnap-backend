@@ -1,0 +1,28 @@
+name: Deploy Backend to AWS EC2
+
+on:
+  push:
+    branches:
+      - master  # Runs when you push to master branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          cd /home/ubuntu/booksnap-backend || git clone https://github.com/SwannJulien/booksnap-backend.git /home/ubuntu/booksnap-backend
+          cd /home/ubuntu/booksnap-backend
+          git pull origin master
+          echo "Backend deployment complete!"
+          EOF
