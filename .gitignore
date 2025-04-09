@@ -22,3 +22,34 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Miscellaneous
+modules.xml
+misc.xml
+
+# IntelliJ configuration files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Maven Wrapper JARs
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/MavenWrapperDownloader.java
+
+# Local Configuration #
+.env
+
+# Miscellaneous
+modules.xml
+misc.xml
+
+# IntelliJ configuration files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Maven Wrapper JARs
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/MavenWrapperDownloader.java
