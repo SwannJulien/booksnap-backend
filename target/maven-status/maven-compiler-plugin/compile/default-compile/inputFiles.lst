@@ -1,0 +1,6 @@
+/Users/Swann/Sites/booksnap/booksnap-backend/src/main/java/net/booksnap/booksnap/BooksnapApplication.java
+/Users/Swann/Sites/booksnap/booksnap-backend/src/main/java/net/booksnap/booksnap/SecurityConfig.java
+/Users/Swann/Sites/booksnap/booksnap-backend/src/main/java/net/booksnap/booksnap/book/Book.java
+/Users/Swann/Sites/booksnap/booksnap-backend/src/main/java/net/booksnap/booksnap/book/BookController.java
+/Users/Swann/Sites/booksnap/booksnap-backend/src/main/java/net/booksnap/booksnap/book/BookDTO.java
+/Users/Swann/Sites/booksnap/booksnap-backend/src/main/java/net/booksnap/booksnap/book/BookRepository.java

@@ -1,4 +1,4 @@
-package net.booksnap.booksnap.book;
+package net.booksnap.book;
 import jakarta.persistence.*;
 
 @Entity

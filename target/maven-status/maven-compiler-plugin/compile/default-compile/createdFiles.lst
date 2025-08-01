@@ -1,0 +1,6 @@
+net/booksnap/booksnap/book/BookDTO.class
+net/booksnap/booksnap/book/Book.class
+net/booksnap/booksnap/book/BookRepository.class
+net/booksnap/booksnap/SecurityConfig.class
+net/booksnap/booksnap/BooksnapApplication.class
+net/booksnap/booksnap/book/BookController.class

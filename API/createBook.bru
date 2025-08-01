@@ -1,0 +1,19 @@
+meta {
+  name: createBook
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/books
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "isbn": 1985,
+    "title": "Example Book Title1985",
+    "authors": "Author Name1985"
+  }
+}

@@ -1,4 +1,4 @@
-package net.booksnap.booksnap;
+package net.booksnap;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
