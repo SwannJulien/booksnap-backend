@@ -10,13 +10,17 @@ CREATE TABLE book (
 	is_fiction BOOLEAN NOT NULL,
 	code_dewey TEXT REFERENCES dewey(code_dewey),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT non_fiction_requires_dewey
+    CHECK (is_fiction = false OR code_dewey IS NULL);
 )
 
 CREATE TABLE dewey (
-	code_dewey TEXT PRIMARY KEY,
-	name TEXT
-)
+    code_dewey TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    parent_code TEXT REFERENCES dewey(code_dewey)
+);
 
 CREATE TABLE library (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

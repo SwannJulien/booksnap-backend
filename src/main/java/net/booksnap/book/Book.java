@@ -1,42 +1,55 @@
 package net.booksnap.book;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import net.booksnap.dewey.Dewey;
+import org.hibernate.annotations.Cascade;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "book")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long isbn10;
+    @Column(length = 10)
+    private String isbn10;
 
+    @Column(length = 13)
+    private String isbn13;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String title;
 
-    public Book() {}
+    @Column(name = "publishing_year")
+    private Short publishingYear;
 
-    public Book(Long isbn10, String title) {
-        this.isbn10 = isbn10;
-        this.title = title;
-    }
+    @Column(columnDefinition = "TEXT")
+    private String publisher;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "number_of_pages")
+    private Short numberOfPages;
 
-    public Long getIsbn10() {
-        return isbn10;
-    }
+    @Column(name = "year_recommendation")
+    private Short yearRecommendation;
 
-    public void setIsbn10(Long isbn10) {
-        this.isbn10 = isbn10;
-    }
+    @Column(name = "is_fiction", nullable = false)
+    private Boolean isFiction;
 
-    public String getTitle() {
-        return title;
-    }
+    @ManyToOne
+    @JoinColumn(name = "code_dewey")
+    private Dewey dewey;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime updatedAt;
 }

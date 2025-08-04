@@ -1,22 +1,15 @@
 package net.booksnap.book;
 
-import org.springframework.stereotype.Component;
+import net.booksnap.dewey.DeweyMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class BookMapper {
+@Mapper(componentModel = "spring", uses = DeweyMapper.class)
+public interface BookMapper {
 
-    public BookDTO toDTO(Book book) {
-        return new BookDTO(
-                book.getId(),
-                String.valueOf(book.getIsbn10()), // Convert number to String
-                book.getTitle()
-        );
-    }
+    BookDTO bookToBookDto(Book book);
 
-    public Book toEntity(BookDTO bookDTO) {
-        return new Book(
-                Long.parseLong(bookDTO.getIsbn()), // Convert String to number
-                bookDTO.getTitle()
-        );
-    }
+    @Mapping(source = "codeDewey", target = "dewey")
+    Book bookDtoToBook(BookDTO bookDTO);
+
 }
