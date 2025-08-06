@@ -1,10 +1,13 @@
 package net.booksnap.book;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 
 @RestController
+@Validated
 @RequestMapping("/books")
 public class BookController {
 
@@ -17,7 +20,7 @@ public class BookController {
     // POST: Add a new book
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void addNewBook(@RequestBody BookDTO bookDTO) {
+    public void addNewBook(@RequestBody @Valid BookDTO bookDTO) {
         bookService.addBook(bookDTO);
     }
 }
