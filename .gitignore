@@ -43,3 +43,6 @@ misc.xml
 # Todo file and requirements
 *.txt
 Requirements.md
+
+## target folder
+/target/
