@@ -25,7 +25,7 @@ public class BookService {
             if(e.getMessage().contains("non_fiction_requires_dewey")){
                 throw new FictionBookHasDeweyCodeException();
             } else if(e.getMessage().contains("persistent instance references an unsaved transient instance of 'net.booksnap.dewey.Dewey'")){
-                throw new DeweyCodeNotFoundException();
+                throw new DeweyCodeNotFoundException(bookDTO.getCodeDewey());
             } else throw e;
         }
     }

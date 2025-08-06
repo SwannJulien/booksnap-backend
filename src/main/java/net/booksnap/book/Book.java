@@ -3,8 +3,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.booksnap.dewey.Dewey;
-import org.hibernate.annotations.Cascade;
+import net.booksnap.dewey.DeweyCategory;
 
 import java.time.LocalDateTime;
 
@@ -44,8 +43,8 @@ public class Book {
     private Boolean isFiction;
 
     @ManyToOne
-    @JoinColumn(name = "code_dewey")
-    private Dewey dewey;
+    @JoinColumn(name = "code")
+    private DeweyCategory deweyCategory;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;

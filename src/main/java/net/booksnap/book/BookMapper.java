@@ -9,7 +9,7 @@ public interface BookMapper {
 
     BookDTO bookToBookDto(Book book);
 
-    @Mapping(source = "codeDewey", target = "dewey")
+    @Mapping(source = "codeDewey", target = "deweyCategory")
     Book bookDtoToBook(BookDTO bookDTO);
 
 }

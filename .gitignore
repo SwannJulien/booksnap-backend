@@ -41,5 +41,5 @@ misc.xml
 .env
 
 # Todo file and requirements
-todo.txt
+*.txt
 Requirements.md

@@ -3,7 +3,6 @@ package net.booksnap.book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.booksnap.dewey.Dewey;
 
 import java.util.Date;
 

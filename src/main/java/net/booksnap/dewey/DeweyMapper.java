@@ -1,19 +1,27 @@
 package net.booksnap.dewey;
 
+import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DeweyMapper {
-    public Dewey fromCode(String code) {
+
+    private final DeweyCategoryRepository deweyCategoryRepository;
+
+    public DeweyMapper(DeweyCategoryRepository deweyCategoryRepository) {
+        this.deweyCategoryRepository = deweyCategoryRepository;
+    }
+
+    public DeweyCategory fromCode(String code) {
         if (code == null || code.isBlank()) {
             return null;
         }
-        Dewey dewey = new Dewey();
-        dewey.setCodeDewey(code);
-        return dewey;
+
+        return deweyCategoryRepository.findByCode(code)
+                .orElseThrow(() -> new DeweyCodeNotFoundException(code));
     }
 
-    public String toCode(Dewey dewey) {
-        return (dewey != null) ? dewey.getCodeDewey() : null;
+    public String toCode(DeweyCategory deweyCategory) {
+        return (deweyCategory != null) ? deweyCategory.getCode() : null;
     }
 }

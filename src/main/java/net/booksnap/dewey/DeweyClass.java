@@ -5,23 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
+@Table(name = "dewey_class")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dewey {
-
+public class DeweyClass {
     @Id
-    private String codeDewey;
+    @Column(name = "code", unique = true, nullable = false)
+    private String code;
 
+    @Column(name = "name", nullable = false)
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "parent_code")
-    private Dewey parent;
-
-    @OneToMany(mappedBy = "parent")
-    private List<Dewey> children;
 }

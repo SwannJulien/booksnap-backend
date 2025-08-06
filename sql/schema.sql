@@ -8,18 +8,31 @@ CREATE TABLE book (
 	number_of_pages SMALLINT,
 	year_recommendation SMALLINT,
 	is_fiction BOOLEAN NOT NULL,
-	code_dewey TEXT REFERENCES dewey(code_dewey),
+	code_dewey TEXT REFERENCES dewey_category(code)
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT non_fiction_requires_dewey
-    CHECK (is_fiction = false OR code_dewey IS NULL);
+    CHECK (is_fiction = false OR dewey_id IS NULL);
 )
 
-CREATE TABLE dewey (
-    code_dewey TEXT PRIMARY KEY,
+CREATE TABLE dewey_class (
+    code TEXT PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE dewey_division (
+    code TEXT PRIMARY KEY,
     name TEXT NOT NULL,
-    parent_code TEXT REFERENCES dewey(code_dewey)
+    class_code TEXT NOT NULL,
+    CONSTRAINT fk_division_class FOREIGN KEY (class_code) REFERENCES dewey_class(code)
+);
+
+CREATE TABLE dewey_category (
+    code TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    division_code TEXT NOT NULL,
+    CONSTRAINT fk_category_division FOREIGN KEY (division_code) REFERENCES dewey_division(code)
 );
 
 CREATE TABLE library (
