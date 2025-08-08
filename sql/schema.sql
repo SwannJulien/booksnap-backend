@@ -8,12 +8,12 @@ CREATE TABLE book (
 	number_of_pages SMALLINT,
 	year_recommendation SMALLINT,
 	is_fiction BOOLEAN NOT NULL,
-	code_dewey TEXT REFERENCES dewey_category(code)
+	code_dewey TEXT REFERENCES dewey_category(code),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT non_fiction_requires_dewey
-    CHECK (is_fiction = false OR dewey_id IS NULL);
+    CHECK (is_fiction = false OR code_dewey IS NULL);
 )
 
 CREATE TABLE dewey_class (
@@ -50,9 +50,11 @@ CREATE TABLE copy (
 	status copy_status NOT NULL DEFAULT 'available'
 )
 
+CREATE EXTENSION citext;
+
 CREATE TABLE genre (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	name TEXT UNIQUE
+	name CITEXT UNIQUE
 )
 
 CREATE TABLE book_genre (
@@ -82,7 +84,6 @@ CREATE TABLE book_author (
 	PRIMARY KEY (author_id, book_id)
 )
 
-CREATE EXTENSION citext;
 CREATE DOMAIN email AS citext
   CHECK ( value ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$' );
 
@@ -108,7 +109,7 @@ CREATE TABLE borrowing (
 	start_date DATE NOT NULL CHECK (start_date <= end_date),
 	end_date DATE NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
 CREATE TYPE hold_status AS ENUM ('active', 'expired', 'fulfilled');

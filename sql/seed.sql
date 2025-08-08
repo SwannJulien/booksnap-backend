@@ -64,6 +64,42 @@ INSERT INTO dewey_category (code, name, division_code) VALUES
 ('038', 'Encyclopedias in Scandinavian languages', '030'),
 ('039', 'Encyclopedias in other languages', '030');
 
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('050', 'General serial publications', '050'),
+('051', 'Serials in American English', '050'),
+('052', 'Serials in English', '050'),
+('053', 'Serials in other Germanic languages', '050'),
+('054', 'Serials in French, Occitan, and Catalan', '050'),
+('055', 'Serials in Italian, Romanian, and related languages', '050'),
+('056', 'Serials in Spanish and Portuguese', '050'),
+('057', 'Serials in Slavic languages', '050'),
+('058', 'Serials in Scandinavian languages', '050'),
+('059', 'Serials in other languages', '050');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('060', 'General organizations and museum science', '060'),
+('061', 'Organizations in North America', '060'),
+('062', 'Organizations in British Isles; in England', '060'),
+('063', 'Organizations in central Europe; in Germany', '060'),
+('064', 'Organizations in France and Monaco', '060'),
+('065', 'Organizations in Italy and adjacent islands', '060'),
+('066', 'Organizations in Iberian Peninsula and adjacent islands', '060'),
+('067', 'Organizations in eastern Europe; in Russia', '060'),
+('068', 'Organizations in other geographic areas', '060'),
+('069', 'Museum science', '060');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('070', 'News media, journalism, and publishing', '070'),
+('071', 'Newspapers in North America', '070'),
+('072', 'Newspapers in British Isles; in England', '070'),
+('073', 'Newspapers in central Europe; in Germany', '070'),
+('074', 'Newspapers in France and Monaco', '070'),
+('075', 'Newspapers in Italy and adjacent islands', '070'),
+('076', 'Newspapers in Iberian peninsula and adjacent islands', '070'),
+('077', 'Newspapers in eastern Europe; in Russia', '070'),
+('078', 'Newspapers in Scandinavia', '070'),
+('079', 'Newspapers in other geographic areas', '070');
+
 
 
 
