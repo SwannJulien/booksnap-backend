@@ -46,7 +46,7 @@ public class Book {
     private Boolean isFiction;
 
     @ManyToOne
-    @JoinColumn(name = "code")
+    @JoinColumn(name = "code_dewey")
     private DeweyCategory deweyCategory;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
