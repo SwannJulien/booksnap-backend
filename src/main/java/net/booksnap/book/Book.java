@@ -2,7 +2,11 @@ package net.booksnap.book;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import net.booksnap.author.Author;
+import net.booksnap.cover.Cover;
 import net.booksnap.dewey.DeweyCategory;
 import net.booksnap.genre.Genre;
 
@@ -15,6 +19,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"genres", "authors", "covers"})
+@ToString(exclude = {"genres", "authors", "covers"})
 public class Book {
 
     @Id
@@ -62,4 +68,15 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres = new HashSet<>();
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authors = new HashSet<>();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Cover> covers = new HashSet<>();
 }

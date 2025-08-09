@@ -1,4 +1,4 @@
-package net.booksnap.genre;
+package net.booksnap.author;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,13 +12,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "genre")
+@Table(name = "author")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "books")
 @ToString(exclude = "books")
-public class Genre {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,6 @@ public class Genre {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
+    @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 }

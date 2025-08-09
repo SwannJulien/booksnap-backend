@@ -39,6 +39,12 @@ public class BookDTO {
 
     private Set<String> genres;
 
+    private Set<String> authors;
+
+    private String coverLink;
+
+    private String coverName;
+
     private Date createdAt;
 
     private Date updatedAt;
