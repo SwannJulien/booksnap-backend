@@ -1,3 +1,5 @@
+CREATE EXTENSION citext;
+
 CREATE TABLE book (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	isbn10 VARCHAR(10),
@@ -35,23 +37,6 @@ CREATE TABLE dewey_category (
     CONSTRAINT fk_category_division FOREIGN KEY (division_code) REFERENCES dewey_division(code)
 );
 
-CREATE TABLE library (
-	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	name TEXT UNIQUE
-)
-
-CREATE TYPE copy_status AS ENUM ('available', 'borrowed', 'on_hold', 'lost', 'damaged', 'removed');
-
-CREATE TABLE copy (
-	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	book_id BIGINT NOT NULL REFERENCES book(id) ON DELETE CASCADE,
-	code_identification TEXT NOT NULL,
-	library_id BIGINT NOT NULL REFERENCES library(id),
-	status copy_status NOT NULL DEFAULT 'available'
-)
-
-CREATE EXTENSION citext;
-
 CREATE TABLE genre (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name CITEXT UNIQUE
@@ -82,6 +67,21 @@ CREATE TABLE book_author (
 	book_id BIGINT NOT NULL REFERENCES book(id) ON DELETE CASCADE,
 
 	PRIMARY KEY (author_id, book_id)
+)
+
+CREATE TABLE library (
+	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	name TEXT UNIQUE
+)
+
+CREATE TYPE copy_status AS ENUM ('available', 'borrowed', 'on_hold', 'lost', 'damaged', 'removed');
+
+CREATE TABLE copy (
+	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	book_id BIGINT NOT NULL REFERENCES book(id) ON DELETE CASCADE,
+	code_identification TEXT NOT NULL,
+	library_id BIGINT NOT NULL REFERENCES library(id),
+	status copy_status NOT NULL DEFAULT 'available'
 )
 
 CREATE DOMAIN email AS citext
@@ -126,10 +126,10 @@ CREATE TABLE hold (
 )
 
 CREATE TABLE waitlist (
-	book_id BIGINT NOT NULL REFERENCES book(id),
-    user_id BIGINT NOT NULL REFERENCES users(id),
-
-    PRIMARY KEY (book_id, user_id)
+      book_id BIGINT NOT NULL REFERENCES book(id),
+      user_id BIGINT NOT NULL REFERENCES users(id),
+      library_id BIGINT NOT NULL REFERENCES library(id),
+      PRIMARY KEY (book_id, user_id, library_id)
 )
 
 CREATE TABLE notification (

@@ -45,6 +45,9 @@ public class BookDTO {
 
     private String coverName;
 
+    @NotNull
+    private Long libraryId;
+
     private Date createdAt;
 
     private Date updatedAt;
