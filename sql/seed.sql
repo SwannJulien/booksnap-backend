@@ -772,6 +772,496 @@ INSERT INTO dewey_category (code, name, division_code) VALUES
 ('578', 'Natural history of organisms', '570'),
 ('579', 'Microorganisms, fungi, algae', '570');
 
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('580', 'Plants (botany)', '580'),
+('581', 'Specific topics in natural history of plants', '580'),
+('582', 'Plants noted for specific vegetative characteristics and flowers', '580'),
+('583', 'Magnoliopsida (Dicotyledons)', '580'),
+('584', 'Liliopsida (Monocotyledons)', '580'),
+('585', 'Gymnosperms, Coniferophyta (Conifers)', '580'),
+('586', 'Seedless plants', '580'),
+('587', 'Pteridophyta (Vascular cryptogams)', '580'),
+('588', 'Bryophyta', '580'),
+('589', 'Thallobionta and Prokaryotae', '580');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('590', 'Animals (zoology)', '590'),
+('591', 'Specific topics in natural history of animals', '590'),
+('592', 'Invertebrates', '590'),
+('593', 'Marine and seashore invertebrates', '590'),
+('594', 'Mollusca and Molluscoidea', '590'),
+('595', 'Arthropoda (Arthropods)', '590'),
+('596', 'Chordata (Chordates)', '590'),
+('597', 'Cold-blooded vertebrates, Pisces (Fishes)', '590'),
+('598', 'Aves (Birds)', '590'),
+('599', 'Mammalia (Mammals)', '590');
+
+-- 600-699: Technology (applied sciences)
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('600', 'Technology (applied sciences)', '600'),
+('601', 'Philosophy and theory of technology', '600'),
+('602', 'Miscellany of technology', '600'),
+('603', 'Dictionaries of technology', '600'),
+('604', 'Special topics of technology', '600'),
+('605', 'Serial publications of technology', '600'),
+('606', 'Organizations of technology', '600'),
+('607', 'Education, research, related topics of technology', '600'),
+('608', 'Inventions and patents', '600'),
+('609', 'Historical treatment of technology', '600');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('610', 'Medicine and health', '610'),
+('611', 'Human anatomy, cytology, histology', '610'),
+('612', 'Human physiology', '610'),
+('613', 'Personal health and safety', '610'),
+('614', 'Forensic medicine, incidence of disease', '610'),
+('615', 'Pharmacology and therapeutics', '610'),
+('616', 'Diseases', '610'),
+('617', 'Surgery and related medical specialties', '610'),
+('618', 'Gynecology, obstetrics, pediatrics, geriatrics', '610'),
+('619', 'Experimental medicine', '610');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('620', 'Engineering and allied operations', '620'),
+('621', 'Applied physics', '620'),
+('622', 'Mining and related operations', '620'),
+('623', 'Military and nautical engineering', '620'),
+('624', 'Civil engineering', '620'),
+('625', 'Engineering of railroads, roads', '620'),
+('626', 'Not assigned or no longer used', '620'),
+('627', 'Hydraulic engineering', '620'),
+('628', 'Sanitary and municipal engineering', '620'),
+('629', 'Other branches of engineering', '620');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('630', 'Agriculture and related technologies', '630'),
+('631', 'Techniques, equipment, materials', '630'),
+('632', 'Plant injuries, diseases, pests', '630'),
+('633', 'Field and plantation crops', '630'),
+('634', 'Orchards, fruits, forestry', '630'),
+('635', 'Garden crops (Horticulture)', '630'),
+('636', 'Animal husbandry', '630'),
+('637', 'Processing dairy and related products', '630'),
+('638', 'Insect culture', '630'),
+('639', 'Hunting, fishing, conservation, related technologies', '630');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('640', 'Home economics and family living', '640'),
+('641', 'Food and drink', '640'),
+('642', 'Meals and table service', '640'),
+('643', 'Housing and household equipment', '640'),
+('644', 'Household utilities', '640'),
+('645', 'Household furnishing', '640'),
+('646', 'Sewing, clothing, management of personal and family living', '640'),
+('647', 'Management of public households', '640'),
+('648', 'Housekeeping', '640'),
+('649', 'Child rearing, home care of persons', '640');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('650', 'Management and auxiliary services', '650'),
+('651', 'Office services', '650'),
+('652', 'Processes of written communication', '650'),
+('653', 'Shorthand', '650'),
+('657', 'Accounting', '650'),
+('658', 'General management', '650'),
+('659', 'Advertising and public relations', '650');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('660', 'Chemical engineering and related technologies', '660'),
+('661', 'Industrial chemicals', '660'),
+('662', 'Explosives, fuels and related products', '660'),
+('663', 'Beverage technology', '660'),
+('664', 'Food technology', '660'),
+('665', 'Industrial oils, fats, waxes, gases', '660'),
+('666', 'Ceramic and allied technologies', '660'),
+('667', 'Cleaning, color, coating, related technologies', '660'),
+('668', 'Technology of other organic products', '660'),
+('669', 'Metallurgy', '660');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('670', 'Manufacturing', '670'),
+('671', 'Metalworking processes and primary metal products', '670'),
+('672', 'Iron, steel, and other iron alloys', '670'),
+('673', 'Nonferrous metals', '670'),
+('674', 'Lumber processing, wood products, cork', '670'),
+('675', 'Leather and fur processing', '670'),
+('676', 'Pulp and paper technology', '670'),
+('677', 'Textiles', '670'),
+('678', 'Elastomers and elastomer products', '670'),
+('679', 'Other products of specific kinds of materials', '670');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('680', 'Manufacture of products for specific uses', '680'),
+('681', 'Precision instruments and other devices', '680'),
+('682', 'Small forge work (Blacksmithing)', '680'),
+('683', 'Hardware and household appliances', '680'),
+('684', 'Furnishings and home workshops', '680'),
+('685', 'Leather and fur goods, and related products', '680'),
+('686', 'Printing and related activities', '680'),
+('687', 'Clothing and accessories', '680'),
+('688', 'Other final products, and packaging technology', '680'),
+('689', 'Not assigned or no longer used', '680');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('690', 'Buildings and construction', '690'),
+('691', 'Building materials', '690'),
+('692', 'Auxiliary construction practices', '690'),
+('693', 'Construction in specific materials and for specific purposes', '690'),
+('694', 'Wood construction, Carpentry', '690'),
+('695', 'Roof covering', '690'),
+('696', 'Utilities', '690'),
+('697', 'Heating, ventilating, air-conditioning engineering', '690'),
+('698', 'Detail finishing', '690');
+
+-- 700-799: Arts, recreation and sports
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('700', 'Arts, recreation and sports', '700'),
+('701', 'Philosophy and theory of fine and decorative arts', '700'),
+('702', 'Miscellany of fine and decorative arts', '700'),
+('703', 'Dictionaries of fine and decorative arts', '700'),
+('704', 'Special topics of fine and decorative arts', '700'),
+('705', 'Serial publications of fine and decorative arts', '700'),
+('706', 'Organizations and management of fine and decorative arts', '700'),
+('707', 'Education, research, related topics of fine and decorative arts', '700'),
+('708', 'Galleries, museums, private collections of fine and decorative arts', '700'),
+('709', 'Historical treatment of fine and decorative arts', '700');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('710', 'Civic and landscape art', '710'),
+('711', 'Area planning', '710'),
+('712', 'Landscape architecture', '710'),
+('713', 'Landscape architecture of trafficways', '710'),
+('714', 'Water features in landscape architecture', '710'),
+('715', 'Woody plants in landscape architecture', '710'),
+('716', 'Herbaceous plants in landscape architecture', '710'),
+('717', 'Structures in landscape architecture', '710'),
+('718', 'Landscape architecture of cemeteries', '710'),
+('719', 'Natural landscapes', '710');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('720', 'Architecture', '720'),
+('721', 'Architectural materials and structural elements', '720'),
+('722', 'Architecture to ca. 300', '720'),
+('723', 'Architecture from ca. 300 to 1399', '720'),
+('724', 'Architecture from 1400', '720'),
+('725', 'Public structures', '720'),
+('726', 'Buildings for religious and related purposes', '720'),
+('727', 'Buildings for education and research', '720'),
+('728', 'Residential buildings', '720'),
+('729', 'Design and decoration of structures and accessories', '720');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('730', 'Sculpture and related arts', '730'),
+('731', 'Processes, forms, subjects of sculpture', '730'),
+('732', 'Sculpture to ca. 500', '730'),
+('733', 'Greek, Etruscan, Roman sculpture', '730'),
+('734', 'Sculpture from ca. 500 to 1399', '730'),
+('735', 'Sculpture from 1400', '730'),
+('736', 'Carving and carvings', '730'),
+('737', 'Numismatics and sigillography', '730'),
+('738', 'Ceramic arts', '730'),
+('739', 'Art metalwork', '730');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('740', 'Drawing and decorative arts', '740'),
+('741', 'Drawing and drawings', '740'),
+('742', 'Perspective in drawing', '740'),
+('743', 'Drawing and drawings by subject', '740'),
+('744', 'Not assigned or no longer used', '740'),
+('745', 'Decorative arts', '740'),
+('746', 'Textile arts', '740'),
+('747', 'Interior decoration', '740'),
+('748', 'Glass', '740'),
+('749', 'Furniture and accessories', '740');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('750', 'Painting and paintings', '750'),
+('751', 'Techniques, procedures, apparatus, equipment, materials, forms', '750'),
+('752', 'Color', '750'),
+('753', 'Symbolism, allegory, mythology, legend', '750'),
+('754', 'Genre paintings', '750'),
+('755', 'Religion', '750'),
+('756', 'Not assigned or no longer used', '750'),
+('757', 'Human figures', '750'),
+('758', 'Nature, architectural subjects and cityscapes', '750'),
+('759', 'Historical treatment of painting and paintings', '750');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('760', 'Graphic arts, printmaking and prints', '760'),
+('761', 'Relief processes (Block printing)', '760'),
+('763', 'Lithographic (Planographic) processes', '760'),
+('764', 'Chromolithography and serigraphy', '760'),
+('765', 'Metal engraving', '760'),
+('766', 'Mezzotinting and related processes', '760'),
+('767', 'Etching and drypoint', '760'),
+('769', 'Prints', '760');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('770', 'Photography, digital imaging and computer art', '770'),
+('771', 'Techniques, procedures, apparatus, equipment, materials', '770'),
+('772', 'Metallic salt processes', '770'),
+('773', 'Pigment processes of printing', '770'),
+('774', 'Holography', '770'),
+('775', 'Digital photography', '770'),
+('776', 'Computer art (Digital art)', '770'),
+('778', 'Fields and kinds of photography', '770'),
+('779', 'Photographs', '770');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('780', 'Music', '780'),
+('781', 'General principles and musical forms', '780'),
+('782', 'Vocal music', '780'),
+('783', 'Music for single voices, the voice', '780'),
+('784', 'Instruments and instrumental ensembles and their music', '780'),
+('785', 'Ensembles and their music', '780'),
+('786', 'Keyboard and other instruments', '780'),
+('787', 'Stringed instruments', '780'),
+('788', 'Wind instruments', '780');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('790', 'Recreational and performing arts', '790'),
+('791', 'Public performances', '790'),
+('792', 'Stage presentations', '790'),
+('793', 'Indoor games and amusements', '790'),
+('794', 'Indoor games of skill', '790'),
+('795', 'Games of chance', '790'),
+('796', 'Athletic and outdoor sports and games', '790'),
+('797', 'Aquatic and air sports', '790'),
+('798', 'Equestrian sports and animal racing', '790'),
+('799', 'Fishing, hunting, shooting', '790');
+
+-- 800-899: Literature
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('800', 'Literature', '800'),
+('801', 'Philosophy and theory of literature', '800'),
+('802', 'Miscellany of literature', '800'),
+('803', 'Dictionaries of literature', '800'),
+('804', 'Special topics of literature', '800'),
+('805', 'Serial publications of literature', '800'),
+('806', 'Organizations and management of literature', '800'),
+('807', 'Education, research, related topics of literature', '800'),
+('808', 'Rhetoric and collections of literary texts from more than two literatures', '800'),
+('809', 'History, description, critical appraisal of more than two literatures', '800');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('810', 'American literature in English', '810'),
+('811', 'American poetry in English', '810'),
+('812', 'American drama in English', '810'),
+('813', 'American fiction in English', '810'),
+('814', 'American essays in English', '810'),
+('815', 'American speeches in English', '810'),
+('816', 'American letters in English', '810'),
+('817', 'American humor and satire in English', '810'),
+('818', 'American miscellaneous writings in English', '810'),
+('819', 'Literatures of other languages of North America', '810');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('820', 'English and Old English literatures', '820'),
+('821', 'English poetry', '820'),
+('822', 'English drama', '820'),
+('823', 'English fiction', '820'),
+('824', 'English essays', '820'),
+('825', 'English speeches', '820'),
+('826', 'English letters', '820'),
+('827', 'English humor and satire', '820'),
+('828', 'English miscellaneous writings', '820'),
+('829', 'Old English (Anglo-Saxon)', '820');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('830', 'Literatures of Germanic languages', '830'),
+('831', 'German poetry', '830'),
+('832', 'German drama', '830'),
+('833', 'German fiction', '830'),
+('834', 'German essays', '830'),
+('835', 'German speeches', '830'),
+('836', 'German letters', '830'),
+('837', 'German humor and satire', '830'),
+('838', 'German miscellaneous writings', '830'),
+('839', 'Other Germanic literatures', '830');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('840', 'Literatures of Romance languages, French literature', '840'),
+('841', 'French poetry', '840'),
+('842', 'French drama', '840'),
+('843', 'French fiction', '840'),
+('844', 'French essays', '840'),
+('845', 'French speeches', '840'),
+('846', 'French letters', '840'),
+('847', 'French humor and satire', '840'),
+('848', 'French miscellaneous writings', '840'),
+('849', 'Occitan and Catalan literatures', '840');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('850', 'Italian, Romanian and Rhaeto-Romanic literatures', '850'),
+('851', 'Italian poetry', '850'),
+('852', 'Italian drama', '850'),
+('853', 'Italian fiction', '850'),
+('854', 'Italian essays', '850'),
+('855', 'Italian speeches', '850'),
+('856', 'Italian letters', '850'),
+('857', 'Italian humor and satire', '850'),
+('858', 'Italian miscellaneous writings', '850'),
+('859', 'Romanian and Rhaeto-Romanic literatures', '850');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('860', 'Spanish and Portuguese literatures', '860'),
+('861', 'Spanish poetry', '860'),
+('862', 'Spanish drama', '860'),
+('863', 'Spanish fiction', '860'),
+('864', 'Spanish essays', '860'),
+('865', 'Spanish speeches', '860'),
+('866', 'Spanish letters', '860'),
+('867', 'Spanish humor and satire', '860'),
+('868', 'Spanish miscellaneous writings', '860'),
+('869', 'Portuguese literature', '860');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('870', 'Latin and other Italic literatures', '870'),
+('871', 'Latin poetry', '870'),
+('872', 'Latin dramatic poetry and drama', '870'),
+('873', 'Latin epic poetry and fiction', '870'),
+('874', 'Latin lyric poetry', '870'),
+('875', 'Latin speeches', '870'),
+('876', 'Latin letters', '870'),
+('877', 'Latin humor and satire', '870'),
+('878', 'Latin miscellaneous writings', '870'),
+('879', 'Other Italic literatures', '870');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('880', 'Hellenic literatures, Classical Greek', '880'),
+('881', 'Classical Greek poetry', '880'),
+('882', 'Classical Greek dramatic poetry and drama', '880'),
+('883', 'Classical Greek epic poetry and fiction', '880'),
+('884', 'Classical Greek lyric poetry', '880'),
+('885', 'Classical Greek speeches', '880'),
+('886', 'Classical Greek letters', '880'),
+('887', 'Classical Greek humor and satire', '880'),
+('888', 'Classical Greek miscellaneous writings', '880'),
+('889', 'Modern Greek literature', '880');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('890', 'Literatures of other languages', '890'),
+('891', 'East Indo-European and Celtic literatures', '890'),
+('892', 'Afro-Asiatic literatures, Semitic literatures', '890'),
+('893', 'Non-Semitic Afro-Asiatic literatures', '890'),
+('894', 'Altaic, Uralic, Hyperborean, Dravidian literatures', '890'),
+('895', 'Literatures of East and Southeast Asia', '890'),
+('896', 'African literatures', '890'),
+('897', 'North American native literatures', '890'),
+('898', 'South American native literatures', '890'),
+('899', 'Austronesian and other literatures', '890');
+
+-- 900-999: History and geography
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('900', 'History and geography', '900'),
+('901', 'Philosophy and theory of history', '900'),
+('902', 'Miscellany of history', '900'),
+('903', 'Dictionaries of history', '900'),
+('904', 'Collected accounts of events', '900'),
+('905', 'Serial publications of history', '900'),
+('906', 'Organizations and management of history', '900'),
+('907', 'Education, research, related topics of history', '900'),
+('908', 'With respect to groups of people', '900'),
+('909', 'World history', '900');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('910', 'Geography and travel', '910'),
+('911', 'Historical geography', '910'),
+('912', 'Graphic representations of surface of earth and of extraterrestrial worlds', '910'),
+('913', 'Geography of and travel in ancient world', '910'),
+('914', 'Geography of and travel in Europe', '910'),
+('915', 'Geography of and travel in Asia', '910'),
+('916', 'Geography of and travel in Africa', '910'),
+('917', 'Geography of and travel in North America', '910'),
+('918', 'Geography of and travel in South America', '910'),
+('919', 'Geography of and travel in other areas', '910');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('920', 'Biography, genealogy and insignia', '920'),
+('929', 'Genealogy, names, insignia', '920');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('930', 'History of ancient world to ca. 499', '930'),
+('931', 'China to 420', '930'),
+('932', 'Egypt to 640', '930'),
+('933', 'Palestine to 70', '930'),
+('934', 'India to 647', '930'),
+('935', 'Mesopotamia and Iranian Plateau to 637', '930'),
+('936', 'Europe north and west of Italian Peninsula to ca. 499', '930'),
+('937', 'Italian Peninsula and adjacent territories to 476 and 1453', '930'),
+('938', 'Greece to 323', '930'),
+('939', 'Other parts of ancient world to ca. 640', '930');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('940', 'General history of Europe', '940'),
+('941', 'British Isles', '940'),
+('942', 'England and Wales', '940'),
+('943', 'Central Europe, Germany', '940'),
+('944', 'France and Monaco', '940'),
+('945', 'Italian Peninsula and adjacent islands', '940'),
+('946', 'Iberian Peninsula and adjacent islands', '940'),
+('947', 'Eastern Europe, Russia', '940'),
+('948', 'Scandinavia', '940'),
+('949', 'Other parts of Europe', '940');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('950', 'General history of Asia', '950'),
+('951', 'China and adjacent areas', '950'),
+('952', 'Japan', '950'),
+('953', 'Arabian Peninsula and adjacent areas', '950'),
+('954', 'South Asia, India', '950'),
+('955', 'Iran', '950'),
+('956', 'Middle East (Near East)', '950'),
+('957', 'Siberia (Asiatic Russia)', '950'),
+('958', 'Central Asia', '950'),
+('959', 'Southeast Asia', '950');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('960', 'General history of Africa', '960'),
+('961', 'Tunisia and Libya', '960'),
+('962', 'Egypt and Sudan', '960'),
+('963', 'Ethiopia and Eritrea', '960'),
+('964', 'Morocco and Canary Islands', '960'),
+('965', 'Algeria', '960'),
+('966', 'West Africa and offshore islands', '960'),
+('967', 'Central Africa and offshore islands', '960'),
+('968', 'Southern Africa', '960'),
+('969', 'South Indian Ocean islands', '960');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('970', 'General history of North America', '970'),
+('971', 'Canada', '970'),
+('972', 'Mexico, Central America, Caribbean islands', '970'),
+('973', 'United States', '970'),
+('974', 'Northeastern United States', '970'),
+('975', 'Southeastern United States', '970'),
+('976', 'South central United States', '970'),
+('977', 'North central United States', '970'),
+('978', 'Western United States', '970'),
+('979', 'Great Basin and Pacific Slope region of United States', '970');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('980', 'General history of South America', '980'),
+('981', 'Brazil', '980'),
+('982', 'Argentina', '980'),
+('983', 'Chile', '980'),
+('984', 'Bolivia', '980'),
+('985', 'Peru', '980'),
+('986', 'Colombia and Ecuador', '980'),
+('987', 'Venezuela', '980'),
+('988', 'Guyana', '980'),
+('989', 'Paraguay and Uruguay', '980');
+
+INSERT INTO dewey_category (code, name, division_code) VALUES
+('990', 'General history of other areas', '990'),
+('993', 'New Zealand', '990'),
+('994', 'Australia', '990'),
+('995', 'Melanesia, New Guinea', '990'),
+('996', 'Other parts of Pacific, Polynesia', '990'),
+('997', 'Atlantic Ocean islands', '990'),
+('998', 'Arctic islands and Antarctica', '990'),
+('999', 'Extraterrestrial worlds', '990');
+
 
 
 
