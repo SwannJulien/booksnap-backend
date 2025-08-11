@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.booksnap.BaseEntity;
 import net.booksnap.book.Book;
 
 import java.util.HashSet;
@@ -16,9 +17,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "books")
+@EqualsAndHashCode(exclude = "books", callSuper = false)
 @ToString(exclude = "books")
-public class Genre {
+public class Genre extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

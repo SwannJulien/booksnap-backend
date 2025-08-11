@@ -2,44 +2,41 @@ package net.booksnap.copy;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
+import net.booksnap.BaseEntity;
 import net.booksnap.book.Book;
 import net.booksnap.library.Library;
 import org.hibernate.annotations.JdbcType;
-import org.hibernate.annotations.Type;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-
 
 @Entity
 @Table(name = "copy")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Copy {
+@EqualsAndHashCode(callSuper = true)
+public class Copy extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    Book book;
+    private Book book;
 
     @Column(name = "code_identification")
     @NotNull
-    String codeIdentification;
+    private String codeIdentification;
 
     @ManyToOne
     @JoinColumn(name = "library_id", nullable = false)
-    Library library;
+    private Library library;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     @JdbcType(PostgreSQLEnumJdbcType.class)
     @NotNull
-    Status status = Status.available;
+    private Status status = Status.available;
 
 }

@@ -3,19 +3,22 @@ package net.booksnap.library;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import net.booksnap.BaseEntity;
 
 @Entity
 @Table(name = "library")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Library {
+@EqualsAndHashCode(callSuper = true)
+public class Library extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "name")
-    String name;
+    private String name;
 }

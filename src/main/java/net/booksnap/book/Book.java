@@ -5,12 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.booksnap.BaseEntity;
 import net.booksnap.author.Author;
 import net.booksnap.cover.Cover;
 import net.booksnap.dewey.DeweyCategory;
 import net.booksnap.genre.Genre;
-
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,9 +18,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"genres", "authors", "covers"})
+@EqualsAndHashCode(exclude = {"genres", "authors", "covers"}, callSuper = false)
 @ToString(exclude = {"genres", "authors", "covers"})
-public class Book {
+public class Book extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,12 +54,6 @@ public class Book {
     @JoinColumn(name = "code_dewey")
     private DeweyCategory deweyCategory;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
-
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_genre",
@@ -79,4 +72,5 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Cover> covers = new HashSet<>();
+
 }

@@ -39,7 +39,9 @@ CREATE TABLE dewey_category (
 
 CREATE TABLE genre (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	name CITEXT UNIQUE
+	name CITEXT UNIQUE,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TABLE book_genre (
@@ -53,13 +55,17 @@ CREATE TABLE cover (
 	book_id BIGINT NOT NULL REFERENCES book(id) ON DELETE CASCADE,
 	size TEXT,
 	link TEXT,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 	PRIMARY KEY (book_id, size)
 )
 
 CREATE TABLE author (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	name TEXT UNIQUE
+	name TEXT UNIQUE,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TABLE book_author (
@@ -71,7 +77,9 @@ CREATE TABLE book_author (
 
 CREATE TABLE library (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	name TEXT UNIQUE
+	name TEXT UNIQUE,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TYPE copy_status AS ENUM ('available', 'borrowed', 'on_hold', 'lost', 'damaged', 'removed');
@@ -81,7 +89,9 @@ CREATE TABLE copy (
 	book_id BIGINT NOT NULL REFERENCES book(id) ON DELETE CASCADE,
 	code_identification TEXT NOT NULL,
 	library_id BIGINT NOT NULL REFERENCES library(id),
-	status copy_status NOT NULL DEFAULT 'available'
+	status copy_status NOT NULL DEFAULT 'available',
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE DOMAIN email AS citext
@@ -129,6 +139,8 @@ CREATE TABLE waitlist (
       book_id BIGINT NOT NULL REFERENCES book(id),
       user_id BIGINT NOT NULL REFERENCES users(id),
       library_id BIGINT NOT NULL REFERENCES library(id),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
       PRIMARY KEY (book_id, user_id, library_id)
 )
 
@@ -138,34 +150,6 @@ CREATE TABLE notification (
 	sent_at DATE,
 	type TEXT
 )
-
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = CURRENT_TIMESTAMP;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trg_borrowing_set_updated_at
-BEFORE UPDATE ON borrowing
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER trg_hold_set_updated_at
-BEFORE UPDATE ON hold
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER trg_users_set_updated_at
-BEFORE UPDATE ON users
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER trg_book_set_updated_at
-BEFORE UPDATE ON book
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();
 
 
 

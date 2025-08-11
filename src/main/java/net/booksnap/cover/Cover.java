@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.booksnap.BaseEntity;
 import net.booksnap.book.Book;
 
 @Entity
@@ -14,9 +15,10 @@ import net.booksnap.book.Book;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "book")
+@EqualsAndHashCode(exclude = "book", callSuper = false)
 @ToString(exclude = "book")
-public class Cover {
+public class Cover extends BaseEntity {
+
     @Id
     @Column(name = "book_id")
     private Long bookId;
