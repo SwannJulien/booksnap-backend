@@ -6,6 +6,7 @@ import net.booksnap.copy.Status;
 import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
 import net.booksnap.exception.dewey.FictionBookHasDeweyCodeException;
 import net.booksnap.library.Library;
+import net.booksnap.qr.QRCodeService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,13 +15,16 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final CopyRepository copyRepository;
+    private final QRCodeService qrCodeService;
 
     public BookService(BookRepository bookRepository,
                        BookMapper bookMapper,
-                       CopyRepository copyRepository) {
+                       CopyRepository copyRepository,
+                       QRCodeService qrCodeService) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
         this.copyRepository = copyRepository;
+        this.qrCodeService = qrCodeService;
     }
 
     public void addBook(BookDTO bookDTO) {
@@ -31,9 +35,16 @@ public class BookService {
             Copy copy = new Copy();
             copy.setBook(savedBook);
             copy.setLibrary(new Library(bookDTO.getLibraryId(), null));
-            copy.setCodeIdentification("generateCode()");
             copy.setStatus(Status.available);
-            copyRepository.save(copy);
+            copy.setCodeIdentification("TEMP"); // Temporary placeholder to satisfy @NotNull
+            
+            Copy savedCopy = copyRepository.save(copy);
+            
+            // Generate QR code identification after saving to get the ID
+            String qrCodeIdentification = qrCodeService.generateCopyIdentificationCode(savedCopy);
+            savedCopy.setCodeIdentification(qrCodeIdentification);
+            copyRepository.save(savedCopy);
+            
         } catch (Exception e) {
             if (e.getMessage().contains("non_fiction_requires_dewey")) {
                 throw new FictionBookHasDeweyCodeException();
