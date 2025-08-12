@@ -1,10 +1,16 @@
 package net.booksnap.copy;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.booksnap.book.Book;
 import net.booksnap.book.BookRepository;
 import net.booksnap.library.Library;
 import net.booksnap.qr.QRCodeService;
 import org.springframework.stereotype.Service;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class CopyService {
@@ -13,15 +19,18 @@ public class CopyService {
     private final BookRepository bookRepository;
     private final QRCodeService qrCodeService;
     private final CopyMapper copyMapper;
+    private final ObjectMapper objectMapper;
 
     public CopyService(CopyRepository copyRepository, 
                        BookRepository bookRepository,
                        QRCodeService qrCodeService,
-                       CopyMapper copyMapper) {
+                       CopyMapper copyMapper,
+                       ObjectMapper objectMapper) {
         this.copyRepository = copyRepository;
         this.bookRepository = bookRepository;
         this.qrCodeService = qrCodeService;
         this.copyMapper = copyMapper;
+        this.objectMapper = objectMapper;
     }
 
     public Copy createCopy(CopyDTO copyDTO) {
@@ -48,10 +57,32 @@ public class CopyService {
         return qrCodeService.generateCopyQRCode(copy);
     }
 
-    public CopyDTO findById(Long copyId) {
+    public Object findById(Long copyId, String fields) {
         Copy copy = copyRepository.findById(copyId)
             .orElseThrow(() -> new RuntimeException("Copy not found with ID: " + copyId));
-        return copyMapper.copyToDTO(copy);
+        CopyDTO copyDTO = copyMapper.copyToDTO(copy);
+        
+        if (fields == null || fields.trim().isEmpty()) {
+            return copyDTO;
+        }
+        
+        try {
+            JsonNode fullNode = objectMapper.valueToTree(copyDTO);
+            ObjectNode filteredNode = objectMapper.createObjectNode();
+            
+            Set<String> requestedFields = new HashSet<>(Arrays.asList(fields.split(",")));
+            
+            for (String field : requestedFields) {
+                String trimmedField = field.trim();
+                if (fullNode.has(trimmedField)) {
+                    filteredNode.set(trimmedField, fullNode.get(trimmedField));
+                }
+            }
+            
+            return filteredNode;
+        } catch (Exception e) {
+            throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
+        }
     }
 
     public Copy findCopyEntityById(Long copyId) {

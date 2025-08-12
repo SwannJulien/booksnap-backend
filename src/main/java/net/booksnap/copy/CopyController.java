@@ -27,8 +27,9 @@ public class CopyController {
     }
 
     @GetMapping("/{copyId}")
-    public CopyDTO getCopy(@PathVariable Long copyId) {
-        return copyService.findById(copyId);
+    public Object getCopy(@PathVariable Long copyId, 
+                         @RequestParam(required = false) String fields) {
+        return copyService.findById(copyId, fields);
     }
 
     @GetMapping("/{copyId}/qrcode")

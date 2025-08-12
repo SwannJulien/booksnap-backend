@@ -1,21 +1,14 @@
 package net.booksnap.copy;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class CopyMapper {
+@Mapper(componentModel = "spring")
+public abstract class CopyMapper {
 
-    public CopyDTO copyToDTO(Copy copy) {
-        CopyDTO dto = new CopyDTO();
-        dto.setId(copy.getId());
-        dto.setBookId(copy.getBook().getId());
-        dto.setBookTitle(copy.getBook().getTitle());
-        dto.setLibraryId(copy.getLibrary().getId());
-        dto.setLibraryName(copy.getLibrary().getName());
-        dto.setCodeIdentification(copy.getCodeIdentification());
-        dto.setStatus(copy.getStatus());
-        dto.setCreatedAt(copy.getCreatedAt());
-        dto.setUpdatedAt(copy.getUpdatedAt());
-        return dto;
-    }
+    @Mapping(target = "bookTitle", source = "book.title")
+    @Mapping(target = "bookId", source = "book.id")
+    @Mapping(target = "libraryName", source = "library.name")
+    @Mapping(target = "libraryId", source = "library.id")
+    public abstract CopyDTO copyToDTO(Copy copy);
 }

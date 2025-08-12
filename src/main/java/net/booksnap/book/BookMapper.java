@@ -23,10 +23,10 @@ public abstract class BookMapper {
 
     @Autowired
     protected GenreRepository genreRepository;
-
+    
     @Autowired
     protected DeweyCategoryRepository deweyCategoryRepository;
-
+    
     @Autowired
     protected AuthorRepository authorRepository;
 

@@ -1,0 +1,19 @@
+meta {
+  name: getCopyQRCode
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{vipa}}/copies/:id/qrcode
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 9
+}
+
+settings {
+  encodeUrl: true
+}

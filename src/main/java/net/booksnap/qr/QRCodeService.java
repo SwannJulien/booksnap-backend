@@ -18,9 +18,10 @@ public class QRCodeService {
 
     public byte[] generateCopyQRCode(Copy copy) {
         try {
-            String qrContent = String.format("COPY:%d:LIB:%d:CHK:%s",
+            String qrContent = String.format("COPY:%d:LIB:%d:BOOK:%d:CHK:%s",
                 copy.getId(),
                 copy.getLibrary().getId(),
+                copy.getBook().getId(),
                 generateChecksum(copy.getId()));
 
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -36,9 +37,10 @@ public class QRCodeService {
     }
 
     public String generateCopyIdentificationCode(Copy copy) {
-        return String.format("COPY:%d:LIB:%d:CHK:%s",
+        return String.format("COPY:%d:LIB:%d:BOOK:%d:CHK:%s",
             copy.getId(),
             copy.getLibrary().getId(),
+            copy.getBook().getId(),
             generateChecksum(copy.getId()));
     }
 
@@ -55,13 +57,14 @@ public class QRCodeService {
     public boolean validateQRCode(String qrContent) {
         try {
             String[] parts = qrContent.split(":");
-            if (parts.length != 6) return false;
+            if (parts.length != 8) return false;
             if (!"COPY".equals(parts[0])) return false;
             if (!"LIB".equals(parts[2])) return false;
-            if (!"CHK".equals(parts[4])) return false;
+            if (!"BOOK".equals(parts[4])) return false;
+            if (!"CHK".equals(parts[6])) return false;
 
             Long copyId = Long.parseLong(parts[1]);
-            String providedChecksum = parts[5];
+            String providedChecksum = parts[7];
             String expectedChecksum = generateChecksum(copyId);
 
             return expectedChecksum.equals(providedChecksum);
