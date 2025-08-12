@@ -1,0 +1,19 @@
+meta {
+  name: getBook
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{vipa}}/books/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 203
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,7 +1,7 @@
 package net.booksnap.copy;
 
 import net.booksnap.book.Book;
-import net.booksnap.book.BookRepository;
+import net.booksnap.book.repository.BookRepository;
 import net.booksnap.library.Library;
 import net.booksnap.qr.QRCodeService;
 import net.booksnap.utils.Utils;

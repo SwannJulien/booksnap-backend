@@ -1,5 +1,9 @@
-package net.booksnap.book;
+package net.booksnap.book.service;
 
+import net.booksnap.book.Book;
+import net.booksnap.book.mapper.BookBusinessMapper;
+import net.booksnap.book.repository.BookRepository;
+import net.booksnap.book.service.dto.BookBusinessDTO;
 import net.booksnap.copy.Copy;
 import net.booksnap.copy.CopyRepository;
 import net.booksnap.copy.Status;
@@ -14,31 +18,31 @@ import org.springframework.stereotype.Service;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final BookMapper bookMapper;
+    private final BookBusinessMapper businessMapper;
     private final CopyRepository copyRepository;
     private final QRCodeService qrCodeService;
     private final Utils utils;
 
     public BookService(BookRepository bookRepository,
-                       BookMapper bookMapper,
+                       BookBusinessMapper businessMapper,
                        CopyRepository copyRepository,
                        QRCodeService qrCodeService,
                        Utils utils) {
         this.bookRepository = bookRepository;
-        this.bookMapper = bookMapper;
+        this.businessMapper = businessMapper;
         this.copyRepository = copyRepository;
         this.qrCodeService = qrCodeService;
         this.utils = utils;
     }
 
-    public void addBook(BookDTO bookDTO) {
+    public void addBook(BookBusinessDTO businessDTO) {
         try {
-            Book book = bookMapper.bookDtoToBook(bookDTO);
+            Book book = businessMapper.businessDTOToEntity(businessDTO);
             Book savedBook = bookRepository.save(book);
 
             Copy copy = new Copy();
             copy.setBook(savedBook);
-            copy.setLibrary(new Library(bookDTO.getLibraryId(), null));
+            copy.setLibrary(new Library(businessDTO.getLibraryId(), null));
             copy.setStatus(Status.available);
             copy.setCodeIdentification("TEMP"); // Temporary placeholder to satisfy @NotNull
             
@@ -53,22 +57,21 @@ public class BookService {
             if (e.getMessage().contains("non_fiction_requires_dewey")) {
                 throw new FictionBookHasDeweyCodeException();
             } else if (e.getMessage().contains("persistent instance references an unsaved transient instance of 'net.booksnap.dewey.Dewey'")) {
-                throw new DeweyCodeNotFoundException(bookDTO.getCodeDewey());
+                throw new DeweyCodeNotFoundException(businessDTO.getCodeDewey());
             } else throw e;
         }
     }
 
-    public Object findById(Long bookId, String fields) {
+    public BookBusinessDTO findById(Long bookId) {
         Book book = bookRepository.findById(bookId)
             .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
-        BookDTO bookDTO = bookMapper.bookToBookDto(book);
+        return businessMapper.entityToBusinessDTO(book);
+    }
 
-        if (fields == null || fields.trim().isEmpty()) {
-            return bookDTO;
-        }
-
+    public Object findByIdWithFields(Long bookId, String fields) {
+        BookBusinessDTO businessDTO = findById(bookId);
         try {
-            return utils.filterFields(bookDTO, fields);
+            return utils.filterFields(businessDTO, fields);
         } catch (Exception e) {
             throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
         }

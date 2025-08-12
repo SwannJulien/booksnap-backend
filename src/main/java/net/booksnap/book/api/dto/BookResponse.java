@@ -1,27 +1,23 @@
-package net.booksnap.book;
+package net.booksnap.book.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class BookDTO {
+@AllArgsConstructor
+public class BookResponse {
 
-    @NotNull(message = "The book title is required")
+    private Long id;
+
     private String title;
 
-    @Size(min = 10, max = 10, message = "Isbn10 must be 10 characters long")
     private String isbn10;
 
-    @Size(min = 13, max = 13, message = "Isbn13 must be 13 characters long")
     private String isbn13;
 
     private String publishingYear;
@@ -32,7 +28,6 @@ public class BookDTO {
 
     private String yearRecommendation;
 
-    @NotNull(message = "The book genre fiction/no fiction is required")
     private Boolean isFiction;
 
     private String codeDewey;
@@ -45,11 +40,7 @@ public class BookDTO {
 
     private String coverName;
 
-    @NotNull
-    private Long libraryId;
-
     private Date createdAt;
 
     private Date updatedAt;
 }
-
