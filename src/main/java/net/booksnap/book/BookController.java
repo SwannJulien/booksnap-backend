@@ -23,4 +23,10 @@ public class BookController {
     public void addNewBook(@RequestBody @Valid BookDTO bookDTO) {
         bookService.addBook(bookDTO);
     }
+
+    @GetMapping("/{bookId}")
+    public Object getBook(@PathVariable Long bookId,
+                          @RequestParam(required = false) String fields) {
+        return bookService.findById(bookId, fields);
+    }
 }

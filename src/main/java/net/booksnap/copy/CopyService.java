@@ -1,16 +1,11 @@
 package net.booksnap.copy;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.booksnap.book.Book;
 import net.booksnap.book.BookRepository;
 import net.booksnap.library.Library;
 import net.booksnap.qr.QRCodeService;
+import net.booksnap.utils.Utils;
 import org.springframework.stereotype.Service;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class CopyService {
@@ -19,18 +14,18 @@ public class CopyService {
     private final BookRepository bookRepository;
     private final QRCodeService qrCodeService;
     private final CopyMapper copyMapper;
-    private final ObjectMapper objectMapper;
+    private final Utils utils;
 
-    public CopyService(CopyRepository copyRepository, 
+    public CopyService(CopyRepository copyRepository,
                        BookRepository bookRepository,
                        QRCodeService qrCodeService,
                        CopyMapper copyMapper,
-                       ObjectMapper objectMapper) {
+                       Utils utils) {
         this.copyRepository = copyRepository;
         this.bookRepository = bookRepository;
         this.qrCodeService = qrCodeService;
         this.copyMapper = copyMapper;
-        this.objectMapper = objectMapper;
+        this.utils = utils;
     }
 
     public Copy createCopy(CopyDTO copyDTO) {
@@ -67,19 +62,7 @@ public class CopyService {
         }
         
         try {
-            JsonNode fullNode = objectMapper.valueToTree(copyDTO);
-            ObjectNode filteredNode = objectMapper.createObjectNode();
-            
-            Set<String> requestedFields = new HashSet<>(Arrays.asList(fields.split(",")));
-            
-            for (String field : requestedFields) {
-                String trimmedField = field.trim();
-                if (fullNode.has(trimmedField)) {
-                    filteredNode.set(trimmedField, fullNode.get(trimmedField));
-                }
-            }
-            
-            return filteredNode;
+            return utils.filterFields(copyDTO, fields);
         } catch (Exception e) {
             throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
         }

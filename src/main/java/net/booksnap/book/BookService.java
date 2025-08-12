@@ -7,6 +7,7 @@ import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
 import net.booksnap.exception.dewey.FictionBookHasDeweyCodeException;
 import net.booksnap.library.Library;
 import net.booksnap.qr.QRCodeService;
+import net.booksnap.utils.Utils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,15 +17,18 @@ public class BookService {
     private final BookMapper bookMapper;
     private final CopyRepository copyRepository;
     private final QRCodeService qrCodeService;
+    private final Utils utils;
 
     public BookService(BookRepository bookRepository,
                        BookMapper bookMapper,
                        CopyRepository copyRepository,
-                       QRCodeService qrCodeService) {
+                       QRCodeService qrCodeService,
+                       Utils utils) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
         this.copyRepository = copyRepository;
         this.qrCodeService = qrCodeService;
+        this.utils = utils;
     }
 
     public void addBook(BookDTO bookDTO) {
@@ -51,6 +55,22 @@ public class BookService {
             } else if (e.getMessage().contains("persistent instance references an unsaved transient instance of 'net.booksnap.dewey.Dewey'")) {
                 throw new DeweyCodeNotFoundException(bookDTO.getCodeDewey());
             } else throw e;
+        }
+    }
+
+    public Object findById(Long bookId, String fields) {
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+        BookDTO bookDTO = bookMapper.bookToBookDto(book);
+
+        if (fields == null || fields.trim().isEmpty()) {
+            return bookDTO;
+        }
+
+        try {
+            return utils.filterFields(bookDTO, fields);
+        } catch (Exception e) {
+            throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
         }
     }
 }
