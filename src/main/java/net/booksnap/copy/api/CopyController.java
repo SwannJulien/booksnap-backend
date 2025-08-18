@@ -1,6 +1,8 @@
-package net.booksnap.copy;
+package net.booksnap.copy.api;
 
 import jakarta.validation.Valid;
+import net.booksnap.copy.api.dto.CreateCopyRequest;
+import net.booksnap.copy.service.CopyService;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,14 +24,14 @@ public class CopyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCopy(@RequestBody @Valid CopyDTO copyDTO) {
-         copyService.createCopy(copyDTO);
+    public void createCopy(@RequestBody @Valid CreateCopyRequest createCopyRequest) {
+         copyService.createCopy(createCopyRequest);
     }
 
     @GetMapping("/{copyId}")
     public Object getCopy(@PathVariable Long copyId, 
                          @RequestParam(required = false) String fields) {
-        return copyService.findById(copyId, fields);
+        return copyService.findCopyById(copyId, fields);
     }
 
     @GetMapping("/{copyId}/qrcode")

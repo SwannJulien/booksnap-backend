@@ -5,17 +5,13 @@ meta {
 }
 
 get {
-  url: {{vipa}}/copies/:id?fields=id,bookTitle,bookId
+  url: {{vipa}}/copies/:id
   body: json
   auth: inherit
 }
 
-params:query {
-  fields: id,bookTitle,bookId
-}
-
 params:path {
-  id: 14
+  id: 19
 }
 
 headers {

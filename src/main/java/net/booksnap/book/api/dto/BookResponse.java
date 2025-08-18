@@ -1,46 +1,21 @@
 package net.booksnap.book.api.dto;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Date;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class BookResponse {
 
-    private Long id;
-
-    private String title;
-
-    private String isbn10;
-
-    private String isbn13;
-
-    private String publishingYear;
-
-    private String publisher;
-
-    private int numberOfPages;
-
-    private String yearRecommendation;
-
-    private Boolean isFiction;
-
-    private String codeDewey;
-
-    private Set<String> genres;
-
-    private Set<String> authors;
-
-    private String coverLink;
-
-    private String coverName;
-
-    private Date createdAt;
-
-    private Date updatedAt;
-}
+public record BookResponse(Long id,
+                           String title,
+                           String isbn10,
+                           String isbn13,
+                           String publishingYear,
+                           String publisher,
+                           int numberOfPages,
+                           String yearRecommendation,
+                           Boolean isFiction,
+                           String codeDewey,
+                           Set<String> genres,
+                           Set<String> authors,
+                           String coverLink,
+                           String coverName,
+                           Date createdAt,
+                           Date updatedAt) {}

@@ -1,5 +1,6 @@
-package net.booksnap.copy;
+package net.booksnap.copy.repository;
 
+import net.booksnap.copy.Copy;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CopyRepository extends JpaRepository<Copy, Long> {

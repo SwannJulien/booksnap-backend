@@ -1,0 +1,80 @@
+package net.booksnap.book.service;
+
+import net.booksnap.book.Book;
+import net.booksnap.book.api.dto.BookResponse;
+import net.booksnap.book.api.dto.CreateBookRequest;
+import net.booksnap.book.mapper.BookApiMapper;
+import net.booksnap.book.repository.BookRepository;
+import net.booksnap.copy.Copy;
+import net.booksnap.copy.repository.CopyRepository;
+import net.booksnap.copy.Status;
+import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
+import net.booksnap.exception.dewey.FictionBookHasDeweyCodeException;
+import net.booksnap.library.Library;
+import net.booksnap.qr.QRCodeService;
+import net.booksnap.utils.Utils;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BookServiceImpl implements BookService {
+
+    private final BookRepository bookRepository;
+    private final BookApiMapper bookApiMapper;
+    private final CopyRepository copyRepository;
+    private final QRCodeService qrCodeService;
+    private final Utils utils;
+
+    public BookServiceImpl(BookRepository bookRepository,
+                           BookApiMapper bookApiMapper,
+                           CopyRepository copyRepository,
+                           QRCodeService qrCodeService,
+                           Utils utils) {
+        this.bookRepository = bookRepository;
+        this.bookApiMapper = bookApiMapper;
+        this.copyRepository = copyRepository;
+        this.qrCodeService = qrCodeService;
+        this.utils = utils;
+    }
+
+    public void addBook(CreateBookRequest createBookRequest) {
+        try {
+            Book book = bookApiMapper.createRequestToBookEntity(createBookRequest);
+            Book savedBook = bookRepository.save(book);
+
+            Copy copy = new Copy();
+            copy.setBook(savedBook);
+            copy.setLibrary(new Library(createBookRequest.libraryId(), null));
+            copy.setStatus(Status.available);
+            copy.setCodeIdentification("TEMP"); // Temporary placeholder to satisfy @NotNull
+            
+            Copy savedCopy = copyRepository.save(copy);
+            
+            // Generate QR code identification after saving to get the ID
+            String qrCodeIdentification = qrCodeService.generateCopyIdentificationCode(savedCopy);
+            savedCopy.setCodeIdentification(qrCodeIdentification);
+            copyRepository.save(savedCopy);
+            
+        } catch (Exception e) {
+            if (e.getMessage().contains("non_fiction_requires_dewey")) {
+                throw new FictionBookHasDeweyCodeException();
+            } else if (e.getMessage().contains("persistent instance references an unsaved transient instance of 'net.booksnap.dewey.Dewey'")) {
+                throw new DeweyCodeNotFoundException(createBookRequest.codeDewey());
+            } else throw e;
+        }
+    }
+
+    public BookResponse findBookById(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+        return bookApiMapper.bookEntityToBookResponse(book);
+    }
+
+    public Object findByIdWithFields(Long bookId, String fields) {
+        BookResponse bookResponse = findBookById(bookId);
+        try {
+            return utils.filterFields(bookResponse, fields);
+        } catch (Exception e) {
+            throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
+        }
+    }
+}

@@ -1,41 +1,46 @@
-package net.booksnap.copy;
+package net.booksnap.copy.service;
 
 import net.booksnap.book.Book;
 import net.booksnap.book.repository.BookRepository;
+import net.booksnap.copy.Copy;
+import net.booksnap.copy.api.dto.CreateCopyRequest;
+import net.booksnap.copy.api.dto.CopyResponse;
+import net.booksnap.copy.mapper.CopyApiMapper;
+import net.booksnap.copy.repository.CopyRepository;
 import net.booksnap.library.Library;
 import net.booksnap.qr.QRCodeService;
 import net.booksnap.utils.Utils;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CopyService {
+public class CopyServiceImpl implements CopyService {
 
     private final CopyRepository copyRepository;
     private final BookRepository bookRepository;
     private final QRCodeService qrCodeService;
-    private final CopyMapper copyMapper;
+    private final CopyApiMapper copyApiMapper;
     private final Utils utils;
 
-    public CopyService(CopyRepository copyRepository,
-                       BookRepository bookRepository,
-                       QRCodeService qrCodeService,
-                       CopyMapper copyMapper,
-                       Utils utils) {
+    public CopyServiceImpl(CopyRepository copyRepository,
+                           BookRepository bookRepository,
+                           QRCodeService qrCodeService,
+                           CopyApiMapper copyApiMapper,
+                           Utils utils) {
         this.copyRepository = copyRepository;
         this.bookRepository = bookRepository;
         this.qrCodeService = qrCodeService;
-        this.copyMapper = copyMapper;
+        this.copyApiMapper = copyApiMapper;
         this.utils = utils;
     }
 
-    public Copy createCopy(CopyDTO copyDTO) {
-        Book book = bookRepository.findById(copyDTO.getBookId())
-            .orElseThrow(() -> new RuntimeException("Book not found with ID: " + copyDTO.getBookId()));
+    public Copy createCopy(CreateCopyRequest createCopyRequest) {
+        Book book = bookRepository.findById(createCopyRequest.bookId())
+            .orElseThrow(() -> new RuntimeException("Book not found with ID: " + createCopyRequest.bookId()));
 
         Copy copy = new Copy();
         copy.setBook(book);
-        copy.setLibrary(new Library(copyDTO.getLibraryId(), null));
-        copy.setStatus(copyDTO.getStatus());
+        copy.setLibrary(new Library(createCopyRequest.libraryId(), null));
+        copy.setStatus(createCopyRequest.status());
         copy.setCodeIdentification("TEMP"); // Temporary placeholder to satisfy @NotNull
 
         Copy savedCopy = copyRepository.save(copy);
@@ -52,17 +57,18 @@ public class CopyService {
         return qrCodeService.generateCopyQRCode(copy);
     }
 
-    public Object findById(Long copyId, String fields) {
+    public Object findCopyById(Long copyId, String fields) {
         Copy copy = copyRepository.findById(copyId)
             .orElseThrow(() -> new RuntimeException("Copy not found with ID: " + copyId));
-        CopyDTO copyDTO = copyMapper.copyToDTO(copy);
-        
+        CopyResponse copyResponse = copyApiMapper.copyToResponse(copy);
+
+
         if (fields == null || fields.trim().isEmpty()) {
-            return copyDTO;
+            return copyResponse;
         }
         
         try {
-            return utils.filterFields(copyDTO, fields);
+            return utils.filterFields(copyResponse, fields);
         } catch (Exception e) {
             throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
         }
