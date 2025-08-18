@@ -7,6 +7,8 @@ import net.booksnap.copy.api.dto.CreateCopyRequest;
 import net.booksnap.copy.api.dto.CopyResponse;
 import net.booksnap.copy.mapper.CopyApiMapper;
 import net.booksnap.copy.repository.CopyRepository;
+import net.booksnap.exception.book.BookNotFoundException;
+import net.booksnap.exception.copy.CopyNotFoundException;
 import net.booksnap.library.Library;
 import net.booksnap.qr.QRCodeService;
 import net.booksnap.utils.Utils;
@@ -35,7 +37,7 @@ public class CopyServiceImpl implements CopyService {
 
     public Copy createCopy(CreateCopyRequest createCopyRequest) {
         Book book = bookRepository.findById(createCopyRequest.bookId())
-            .orElseThrow(() -> new RuntimeException("Book not found with ID: " + createCopyRequest.bookId()));
+            .orElseThrow(() -> new BookNotFoundException(createCopyRequest.bookId()));
 
         Copy copy = new Copy();
         copy.setBook(book);
@@ -59,7 +61,7 @@ public class CopyServiceImpl implements CopyService {
 
     public Object findCopyById(Long copyId, String fields) {
         Copy copy = copyRepository.findById(copyId)
-            .orElseThrow(() -> new RuntimeException("Copy not found with ID: " + copyId));
+            .orElseThrow(() -> new CopyNotFoundException(copyId));
         CopyResponse copyResponse = copyApiMapper.copyToResponse(copy);
 
 

@@ -8,6 +8,8 @@ import net.booksnap.book.repository.BookRepository;
 import net.booksnap.copy.Copy;
 import net.booksnap.copy.repository.CopyRepository;
 import net.booksnap.copy.Status;
+import net.booksnap.exception.book.BookNotFoundException;
+import net.booksnap.exception.common.BadRequestException;
 import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
 import net.booksnap.exception.dewey.FictionBookHasDeweyCodeException;
 import net.booksnap.library.Library;
@@ -54,18 +56,18 @@ public class BookServiceImpl implements BookService {
             savedCopy.setCodeIdentification(qrCodeIdentification);
             copyRepository.save(savedCopy);
             
-        } catch (Exception e) {
-            if (e.getMessage().contains("non_fiction_requires_dewey")) {
+        } catch (Exception ex) {
+            if (ex.getMessage().contains("non_fiction_requires_dewey")) {
                 throw new FictionBookHasDeweyCodeException();
-            } else if (e.getMessage().contains("persistent instance references an unsaved transient instance of 'net.booksnap.dewey.Dewey'")) {
+            } else if (ex.getMessage().contains("persistent instance references an unsaved transient instance of 'net.booksnap.dewey.Dewey'")) {
                 throw new DeweyCodeNotFoundException(createBookRequest.codeDewey());
-            } else throw e;
+            } else throw new BadRequestException(ex.getMessage());
         }
     }
 
     public BookResponse findBookById(Long bookId) {
         Book book = bookRepository.findById(bookId)
-            .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+            .orElseThrow(() -> new BookNotFoundException(bookId));
         return bookApiMapper.bookEntityToBookResponse(book);
     }
 
