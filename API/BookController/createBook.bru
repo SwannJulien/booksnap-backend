@@ -1,0 +1,34 @@
+meta {
+  name: createBook
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{vipa}}/api/v1/books
+  body: json
+  auth: inherit
+}
+
+headers {
+  : 
+}
+
+body:json {
+  {
+    "title": "TEst 5",
+    "isbn10": "0060935464",
+    "isbn13": "9780060935467",
+    "publishingYear": "1960",
+    "publisher": "Harper Perennial Modern Classics",
+    "numberOfPages": 376,
+    "yearRecommendation": "14",
+    "isFiction": "fdfdfdf",
+    "codeDewey": "001",
+    "genres": ["Test5"],
+    "authors": ["Test5"],
+    "coverLink": "https://example.com/covers/ile-aux-tresors.jpg",
+    "coverName": "large",
+    "libraryId": 1
+  }
+}

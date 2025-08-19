@@ -1,0 +1,23 @@
+meta {
+  name: createCopy
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{vipa}}/api/v1/copies
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "bookId": 198,
+    "libraryId": 1,
+    "status": "available"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
