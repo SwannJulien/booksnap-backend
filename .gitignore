@@ -37,19 +37,12 @@ misc.xml
 .mvn/wrapper/maven-wrapper.jar
 .mvn/wrapper/MavenWrapperDownloader.java
 
-# Local Configuration #
+# Local Configuration
 .env
 
-# Miscellaneous
-modules.xml
-misc.xml
+# Todo file and requirements
+*.txt
+Requirements.md
 
-# IntelliJ configuration files
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# Maven Wrapper JARs
-.mvn/wrapper/maven-wrapper.jar
-.mvn/wrapper/MavenWrapperDownloader.java
+## target folder
+/target/
