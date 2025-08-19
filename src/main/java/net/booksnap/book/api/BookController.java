@@ -34,4 +34,10 @@ public class BookController {
         // Keep existing field filtering for backward compatibility
         return bookService.findByIdWithFields(bookId, fields);
     }
+
+    @DeleteMapping("/{bookId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteBook(@PathVariable Long bookId){
+        bookService.deleteBook(bookId);
+    }
 }
