@@ -5,9 +5,13 @@ meta {
 }
 
 post {
-  url: {{vipa}}/books
+  url: {{vipa}}/api/v1/books
   body: json
   auth: inherit
+}
+
+headers {
+  : 
 }
 
 body:json {
@@ -19,7 +23,7 @@ body:json {
     "publisher": "Harper Perennial Modern Classics",
     "numberOfPages": 376,
     "yearRecommendation": "14",
-    "isFiction": 23,
+    "isFiction": "fdfdfdf",
     "codeDewey": "001",
     "genres": ["Test5"],
     "authors": ["Test5"],

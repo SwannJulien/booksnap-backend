@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
-@RequestMapping("/copies")
+@RequestMapping("api/v1/copies")
 public class CopyController {
 
     private final CopyService copyService;

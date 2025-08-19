@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @Validated
-@RequestMapping("/books")
+@RequestMapping("api/v1/books")
 public class BookController {
 
     private final BookService bookService;
