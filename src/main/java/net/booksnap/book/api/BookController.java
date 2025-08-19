@@ -38,6 +38,6 @@ public class BookController {
     @DeleteMapping("/{bookId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable Long bookId){
-        bookService.deleteBook(bookId);
+        bookService.deleteBookById(bookId);
     }
 }

@@ -12,4 +12,5 @@ public interface CopyService {
 
     Object findCopyById(Long copyId, String fields);
 
+    void deleteCopyById(Long copyId);
 }
