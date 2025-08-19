@@ -9,4 +9,6 @@ public interface BookService {
     BookResponse findBookById(Long bookId);
 
     Object findByIdWithFields(Long bookId, String fields);
+
+    void deleteBook(Long bookId);
 }
