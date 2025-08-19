@@ -15,7 +15,10 @@ import net.booksnap.exception.dewey.FictionBookHasDeweyCodeException;
 import net.booksnap.library.Library;
 import net.booksnap.qr.QRCodeService;
 import net.booksnap.utils.Utils;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -77,6 +80,14 @@ public class BookServiceImpl implements BookService {
             return utils.filterFields(bookResponse, fields);
         } catch (Exception e) {
             throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
+        }
+    }
+
+    public void deleteBook(Long bookId) {
+        if(bookRepository.existsById(bookId)){
+            bookRepository.deleteById(bookId);
+        } else {
+            throw new BookNotFoundException(bookId);
         }
     }
 }
