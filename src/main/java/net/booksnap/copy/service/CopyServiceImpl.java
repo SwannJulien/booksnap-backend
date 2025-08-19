@@ -80,4 +80,12 @@ public class CopyServiceImpl implements CopyService {
         return copyRepository.findById(copyId)
             .orElseThrow(() -> new RuntimeException("Copy not found with ID: " + copyId));
     }
+
+    public void deleteCopyById(Long copyId) {
+        if (copyRepository.existsById(copyId)){
+            copyRepository.deleteById(copyId);
+        } else {
+            throw new CopyNotFoundException(copyId);
+        }
+    }
 }
