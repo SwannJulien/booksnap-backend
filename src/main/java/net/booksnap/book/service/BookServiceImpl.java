@@ -83,8 +83,8 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    public void deleteBook(Long bookId) {
-        if(bookRepository.existsById(bookId)){
+    public void deleteBookById(Long bookId) {
+        if (bookRepository.existsById(bookId)){
             bookRepository.deleteById(bookId);
         } else {
             throw new BookNotFoundException(bookId);

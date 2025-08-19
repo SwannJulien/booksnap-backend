@@ -10,5 +10,5 @@ public interface BookService {
 
     Object findByIdWithFields(Long bookId, String fields);
 
-    void deleteBook(Long bookId);
+    void deleteBookById(Long bookId);
 }

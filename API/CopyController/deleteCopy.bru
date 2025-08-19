@@ -1,17 +1,17 @@
 meta {
-  name: deleteBook
+  name: deleteCopy
   type: http
-  seq: 4
+  seq: 5
 }
 
 delete {
-  url: {{vipa}}/api/v1/books/:bookId
+  url: {{vipa}}/api/v1/copies/:copyId
   body: none
   auth: inherit
 }
 
 params:path {
-  bookId: 202
+  copyId: 17
 }
 
 settings {

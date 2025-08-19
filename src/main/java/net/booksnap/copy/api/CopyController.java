@@ -47,4 +47,10 @@ public class CopyController {
             .headers(headers)
             .body(qrCodeImage);
     }
+
+    @DeleteMapping("/{copyId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteCopy(@PathVariable Long copyId){
+        copyService.deleteCopyById(copyId);
+    }
 }
