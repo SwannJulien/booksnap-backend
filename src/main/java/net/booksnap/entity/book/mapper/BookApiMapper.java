@@ -6,6 +6,8 @@ import net.booksnap.entity.book.Book;
 import net.booksnap.entity.book.api.dto.CreateBookRequest;
 import net.booksnap.entity.book.api.dto.BookResponse;
 import net.booksnap.entity.cover.Cover;
+import net.booksnap.entity.cover.CoverDTO;
+import net.booksnap.common.dto.AuditDTO;
 import net.booksnap.entity.dewey.DeweyCategory;
 import net.booksnap.entity.dewey.DeweyCategoryRepository;
 import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
@@ -17,6 +19,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -102,8 +105,8 @@ public abstract class BookApiMapper {
     // Convert entity response to DTO
     @Mapping(target = "genres", expression = "java(mapGenresToSet(book.getGenres()))")
     @Mapping(target = "authors", expression = "java(mapAuthorsToSet(book.getAuthors()))")
-    @Mapping(target = "coverLink", expression = "java(mapCoverLink(book.getCovers()))")
-    @Mapping(target = "coverName", expression = "java(mapCoverName(book.getCovers()))")
+    @Mapping(target = "cover", expression = "java(mapCoverToDTO(book.getCovers()))")
+    @Mapping(target = "audit", expression = "java(mapAuditToDTO(book))")
     @Mapping(target = "codeDewey", expression = "java(mapDeweyCode(book.getDeweyCategory()))")
     public abstract BookResponse bookEntityToBookResponse(Book book);
 
@@ -121,20 +124,6 @@ public abstract class BookApiMapper {
         return authors.stream().map(Author::getName).collect(Collectors.toSet());
     }
 
-    protected String mapCoverLink(Set<Cover> covers) {
-        if (covers == null || covers.isEmpty()) {
-            return null;
-        }
-        return covers.iterator().next().getLink();
-    }
-
-    protected String mapCoverName(Set<Cover> covers) {
-        if (covers == null || covers.isEmpty()) {
-            return null;
-        }
-        return covers.iterator().next().getSize();
-    }
-
     protected String mapDeweyCode(DeweyCategory deweyCategory) {
         if (deweyCategory == null) {
             return null;
@@ -142,7 +131,18 @@ public abstract class BookApiMapper {
         return deweyCategory.getCode();
     }
 
+    protected CoverDTO mapCoverToDTO(Set<Cover> covers) {
+        if (covers == null || covers.isEmpty()) {
+            return null;
+        }
+        Cover cover = covers.iterator().next();
+        return new CoverDTO(cover.getSize(), cover.getLink());
+    }
 
-
+    protected AuditDTO mapAuditToDTO(Book book) {
+        Date createdAt = book.getCreatedAt() != null ? Date.from(book.getCreatedAt()) : null;
+        Date updatedAt = book.getUpdatedAt() != null ? Date.from(book.getUpdatedAt()) : null;
+        return new AuditDTO(createdAt, updatedAt);
+    }
 
 }
