@@ -11,4 +11,6 @@ public interface BookService {
     Object findByIdWithFields(Long bookId, String fields);
 
     void deleteBookById(Long bookId);
+
+    void updateBook(Long bookId, CreateBookRequest request);
 }

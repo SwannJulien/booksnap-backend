@@ -2,6 +2,8 @@ package net.booksnap.entity.book.api.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import net.booksnap.entity.cover.CoverDTO;
+
 import java.util.Set;
 
 
@@ -33,9 +35,7 @@ public record CreateBookRequest (
 
     Set<String> authors,
 
-    String coverLink,
-
-    String coverName,
+    CoverDTO cover,
 
     @NotNull(message = "Library ID is required")
     Long libraryId
