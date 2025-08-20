@@ -47,7 +47,7 @@ public abstract class BookApiMapper {
     public abstract Book createRequestToBookEntity(CreateBookRequest request);
 
     @AfterMapping
-    protected void mapGenresToEntity(@MappingTarget Book book, CreateBookRequest request) {
+    public void mapGenresToEntity(@MappingTarget Book book, CreateBookRequest request) {
         if(request.genres() != null && !request.genres().isEmpty()) {
             Set<Genre> genreEntities = request.genres().stream()
                     .map(name -> {
@@ -62,7 +62,7 @@ public abstract class BookApiMapper {
     }
 
     @AfterMapping
-    protected void mapAuthorsToEntity(@MappingTarget Book book, CreateBookRequest request) {
+    public void mapAuthorsToEntity(@MappingTarget Book book, CreateBookRequest request) {
         if(request.authors() != null && !request.authors().isEmpty()) {
             Set<Author> authorEntities = request.authors().stream()
                     .map(name -> {
@@ -77,12 +77,12 @@ public abstract class BookApiMapper {
     }
 
     @AfterMapping
-    protected void mapCoversToEntity(@MappingTarget Book book, CreateBookRequest request) {
-        if (request.coverLink() != null && request.coverName() != null) {
+    public void mapCoversToEntity(@MappingTarget Book book, CreateBookRequest request) {
+        if (request.cover().link() != null && request.cover().size() != null) {
             Set<Cover> covers = new HashSet<>();
             Cover cover = new Cover();
-            cover.setSize(request.coverName());
-            cover.setLink(request.coverLink());
+            cover.setSize(request.cover().size());
+            cover.setLink(request.cover().link());
             cover.setBook(book);
             covers.add(cover);
             book.setCovers(covers);
@@ -90,7 +90,7 @@ public abstract class BookApiMapper {
     }
 
     @AfterMapping
-    protected void mapDeweyCategory(@MappingTarget Book book, CreateBookRequest request) {
+    public void mapDeweyCategory(@MappingTarget Book book, CreateBookRequest request) {
         String codeDewey = request.codeDewey();
 
         if (codeDewey == null || codeDewey.isBlank()) {
