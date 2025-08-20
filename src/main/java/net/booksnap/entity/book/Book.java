@@ -70,7 +70,7 @@ public class Book extends BaseEntity {
     )
     private Set<Author> authors = new HashSet<>();
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Cover> covers = new HashSet<>();
 
 }

@@ -13,6 +13,7 @@ import net.booksnap.exception.common.BadRequestException;
 import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
 import net.booksnap.exception.dewey.FictionBookHasDeweyCodeException;
 import net.booksnap.entity.library.Library;
+import net.booksnap.entity.cover.Cover;
 import net.booksnap.utils.qr.QRCodeService;
 import net.booksnap.utils.Utils;
 import org.springframework.stereotype.Service;
@@ -85,6 +86,57 @@ public class BookServiceImpl implements BookService {
             bookRepository.deleteById(bookId);
         } else {
             throw new BookNotFoundException(bookId);
+        }
+    }
+
+    public void updateBook(Long bookId, CreateBookRequest request) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+
+        // Update existing book properties instead of creating a new entity
+        book.setTitle(request.title());
+        book.setIsbn10(request.isbn10());
+        book.setIsbn13(request.isbn13());
+        book.setPublisher(request.publisher());
+        book.setPublishingYear(request.publishingYear() != null ? Short.valueOf(request.publishingYear()) : null);
+        book.setNumberOfPages((short) request.numberOfPages());
+        book.setYearRecommendation(request.yearRecommendation() != null ? Short.valueOf(request.yearRecommendation()) : null);
+        book.setIsFiction(request.isFiction());
+        
+        // Handle relationships through the mapper's after-mapping methods
+        bookApiMapper.mapGenresToEntity(book, request);
+        bookApiMapper.mapAuthorsToEntity(book, request);
+        bookApiMapper.mapDeweyCategory(book, request);
+        
+        // Update covers: handle existing covers or create new ones
+        updateBookCovers(book, request);
+        
+        bookRepository.save(book);
+    }
+
+    private void updateBookCovers(Book book, CreateBookRequest request) {
+        if (request.cover().link() != null && request.cover().size() != null) {
+            // Find existing cover with the same size or create new one
+            Cover existingCover = book.getCovers().stream()
+                    .filter(cover -> request.cover().size().equals(cover.getSize()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (existingCover != null) {
+                // Update existing cover
+                existingCover.setLink(request.cover().link());
+            } else {
+                // Remove all existing covers and add the new one
+                book.getCovers().clear();
+                Cover newCover = new Cover();
+                newCover.setSize(request.cover().size());
+                newCover.setLink(request.cover().link());
+                newCover.setBook(book);
+                book.getCovers().add(newCover);
+            }
+        } else {
+            // Remove all covers if no cover data provided
+            book.getCovers().clear();
         }
     }
 }
