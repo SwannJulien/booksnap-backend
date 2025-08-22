@@ -1,8 +1,10 @@
 package net.booksnap.common.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public record AuditDTO (
-        Date createdAt,
-        Date updatedAt
+        String createdBy,
+        LocalDateTime createdDate,
+        String lastUpdatedBy,
+        LocalDateTime lastUpdatedDate
 ) {}
