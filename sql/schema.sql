@@ -11,8 +11,10 @@ CREATE TABLE book (
 	year_recommendation SMALLINT,
 	is_fiction BOOLEAN NOT NULL,
 	code_dewey TEXT REFERENCES dewey_category(code),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	created_by TEXT,
+	created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 
     CONSTRAINT non_fiction_requires_dewey
     CHECK (is_fiction = false OR code_dewey IS NULL);
@@ -40,8 +42,10 @@ CREATE TABLE dewey_category (
 CREATE TABLE genre (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name CITEXT UNIQUE,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TABLE book_genre (
@@ -55,8 +59,10 @@ CREATE TABLE cover (
 	book_id BIGINT NOT NULL REFERENCES book(id) ON DELETE CASCADE,
 	size TEXT,
 	link TEXT,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 
 	PRIMARY KEY (book_id, size)
 )
@@ -64,8 +70,10 @@ CREATE TABLE cover (
 CREATE TABLE author (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name TEXT UNIQUE,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TABLE book_author (
@@ -78,8 +86,10 @@ CREATE TABLE book_author (
 CREATE TABLE library (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name TEXT UNIQUE,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TYPE copy_status AS ENUM ('available', 'borrowed', 'on_hold', 'lost', 'damaged', 'removed');
@@ -90,8 +100,10 @@ CREATE TABLE copy (
 	code_identification TEXT NOT NULL,
 	library_id BIGINT NOT NULL REFERENCES library(id),
 	status copy_status NOT NULL DEFAULT 'available',
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE DOMAIN email AS citext
@@ -105,8 +117,10 @@ CREATE TABLE users(
 	email email UNIQUE NOT NULL,
 	is_active BOOLEAN DEFAULT TRUE,
     last_login TIMESTAMP,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TYPE borrowing_status AS ENUM ('borrowed', 'returned', 'overdue');
@@ -118,8 +132,10 @@ CREATE TABLE borrowing (
 	status borrowing_status NOT NULL DEFAULT 'borrowed',
 	start_date DATE NOT NULL CHECK (start_date <= end_date),
 	end_date DATE NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TYPE hold_status AS ENUM ('active', 'expired', 'fulfilled');
@@ -131,16 +147,20 @@ CREATE TABLE hold (
 	status hold_status NOT NULL DEFAULT 'active',
 	start_date DATE NOT NULL CHECK (start_date <= end_date),
 	end_date DATE NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	created_by TEXT,
+    created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_modified_by TEXT,
+    last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
 )
 
 CREATE TABLE waitlist (
       book_id BIGINT NOT NULL REFERENCES book(id),
       user_id BIGINT NOT NULL REFERENCES users(id),
       library_id BIGINT NOT NULL REFERENCES library(id),
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+      created_by TEXT,
+      created_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      last_modified_by TEXT,
+      last_modified_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
       PRIMARY KEY (book_id, user_id, library_id)
 )
 
