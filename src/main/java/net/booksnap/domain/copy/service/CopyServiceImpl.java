@@ -1,9 +1,11 @@
 package net.booksnap.domain.copy.service;
 
+import lombok.extern.slf4j.Slf4j;
 import net.booksnap.domain.book.Book;
 import net.booksnap.domain.book.repository.BookRepository;
 import net.booksnap.domain.copy.Copy;
 import net.booksnap.domain.copy.api.dto.CreateCopyRequest;
+import net.booksnap.domain.copy.api.dto.UpdateCopyRequest;
 import net.booksnap.domain.copy.api.dto.CopyResponse;
 import net.booksnap.domain.copy.mapper.CopyApiMapper;
 import net.booksnap.domain.copy.repository.CopyRepository;
@@ -13,7 +15,10 @@ import net.booksnap.domain.library.Library;
 import net.booksnap.utils.qr.QRCodeService;
 import net.booksnap.utils.Utils;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Service
 public class CopyServiceImpl implements CopyService {
 
@@ -87,5 +92,17 @@ public class CopyServiceImpl implements CopyService {
         } else {
             throw new CopyNotFoundException(copyId);
         }
+    }
+
+    public void updateCopy(Long copyId, UpdateCopyRequest request) {
+        Copy existingCopy = copyRepository.findById(copyId)
+            .orElseThrow(() -> new CopyNotFoundException(copyId));
+
+        if (request.libraryId() != null) {
+            existingCopy.setLibrary(new Library(request.libraryId(), null));
+        }
+        existingCopy.setStatus(request.status());
+
+        copyRepository.save(existingCopy);
     }
 }
