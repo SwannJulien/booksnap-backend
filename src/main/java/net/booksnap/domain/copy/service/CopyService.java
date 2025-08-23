@@ -1,7 +1,9 @@
 package net.booksnap.domain.copy.service;
 
+import jakarta.validation.Valid;
 import net.booksnap.domain.copy.Copy;
 import net.booksnap.domain.copy.api.dto.CreateCopyRequest;
+import net.booksnap.domain.copy.api.dto.UpdateCopyRequest;
 
 public interface CopyService {
     Copy createCopy(CreateCopyRequest createCopyRequest);
@@ -13,4 +15,6 @@ public interface CopyService {
     Object findCopyById(Long copyId, String fields);
 
     void deleteCopyById(Long copyId);
+
+    void updateCopy(Long copyId, @Valid UpdateCopyRequest request);
 }

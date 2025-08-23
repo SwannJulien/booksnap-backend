@@ -1,7 +1,9 @@
 package net.booksnap.domain.copy.api;
 
+import lombok.extern.slf4j.Slf4j;
 import jakarta.validation.Valid;
 import net.booksnap.domain.copy.api.dto.CreateCopyRequest;
+import net.booksnap.domain.copy.api.dto.UpdateCopyRequest;
 import net.booksnap.domain.copy.service.CopyService;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @Validated
 @RequestMapping("api/v1/copies")
@@ -52,5 +55,13 @@ public class CopyController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteCopy(@PathVariable Long copyId){
         copyService.deleteCopyById(copyId);
+    }
+
+    @PutMapping("/{copyId}")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void updateCopy(@PathVariable Long copyId,
+                           @RequestBody @Valid UpdateCopyRequest request) {
+
+        copyService.updateCopy(copyId, request);
     }
 }
