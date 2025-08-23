@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.booksnap.domain.BaseEntity;
+import net.booksnap.domain.Auditable;
 import net.booksnap.domain.book.Book;
 
 @Entity
@@ -17,7 +17,7 @@ import net.booksnap.domain.book.Book;
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "book", callSuper = false)
 @ToString(exclude = "book")
-public class Cover extends BaseEntity {
+public class Cover extends Auditable {
 
     @Id
     @Column(name = "book_id")

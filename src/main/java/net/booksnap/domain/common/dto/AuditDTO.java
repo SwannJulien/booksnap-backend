@@ -1,4 +1,4 @@
-package net.booksnap.common.dto;
+package net.booksnap.domain.common.dto;
 
 import java.time.LocalDateTime;
 

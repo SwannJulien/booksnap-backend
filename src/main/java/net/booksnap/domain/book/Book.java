@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import net.booksnap.domain.Auditable;
-import net.booksnap.domain.BaseEntity;
 import net.booksnap.domain.author.Author;
 import net.booksnap.domain.cover.Cover;
 import net.booksnap.domain.dewey.DeweyCategory;
