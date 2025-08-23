@@ -58,7 +58,7 @@ public class CopyController {
     }
 
     @PutMapping("/{copyId}")
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void updateCopy(@PathVariable Long copyId,
                            @RequestBody @Valid UpdateCopyRequest request) {
 

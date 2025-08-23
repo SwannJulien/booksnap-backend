@@ -42,7 +42,7 @@ public class BookController {
     }
 
     @PutMapping("/{bookId}")
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void updateBook(@PathVariable Long bookId,
                            @RequestBody @Valid CreateBookRequest request) {
         bookService.updateBook(bookId, request);

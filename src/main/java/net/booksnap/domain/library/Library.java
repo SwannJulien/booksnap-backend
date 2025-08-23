@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import net.booksnap.domain.BaseEntity;
+import net.booksnap.domain.Auditable;
 
 @Entity
 @Table(name = "library")
@@ -13,7 +13,7 @@ import net.booksnap.domain.BaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Library extends BaseEntity {
+public class Library extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
