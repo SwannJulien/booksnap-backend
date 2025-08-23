@@ -50,7 +50,6 @@ public class GlobalExceptionHandler {
                 message,
                 request.getRequestURI()
         );
-
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
