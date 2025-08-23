@@ -7,7 +7,7 @@ import net.booksnap.domain.book.api.dto.CreateBookRequest;
 import net.booksnap.domain.book.api.dto.BookResponse;
 import net.booksnap.domain.cover.Cover;
 import net.booksnap.domain.cover.CoverDTO;
-import net.booksnap.common.dto.AuditDTO;
+import net.booksnap.domain.common.dto.AuditDTO;
 import net.booksnap.domain.dewey.DeweyCategory;
 import net.booksnap.domain.dewey.DeweyCategoryRepository;
 import net.booksnap.exception.dewey.DeweyCodeNotFoundException;
@@ -19,8 +19,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;

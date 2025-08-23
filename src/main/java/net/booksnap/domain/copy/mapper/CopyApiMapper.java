@@ -1,8 +1,7 @@
 package net.booksnap.domain.copy.mapper;
 
-import net.booksnap.domain.book.Book;
 import net.booksnap.domain.book.api.dto.BookDTO;
-import net.booksnap.common.dto.AuditDTO;
+import net.booksnap.domain.common.dto.AuditDTO;
 import net.booksnap.domain.copy.Copy;
 import net.booksnap.domain.copy.api.dto.CopyResponse;
 import net.booksnap.domain.copy.Status;
@@ -10,8 +9,6 @@ import net.booksnap.domain.copy.api.dto.CreateCopyRequest;
 import net.booksnap.domain.library.api.dto.LibraryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.Date;
 
 @Mapper(componentModel = "spring")
 public abstract class CopyApiMapper {

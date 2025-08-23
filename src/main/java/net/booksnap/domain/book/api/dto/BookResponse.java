@@ -1,5 +1,5 @@
 package net.booksnap.domain.book.api.dto;
-import net.booksnap.common.dto.AuditDTO;
+import net.booksnap.domain.common.dto.AuditDTO;
 import net.booksnap.domain.cover.CoverDTO;
 
 import java.util.Set;
