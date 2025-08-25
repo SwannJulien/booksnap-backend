@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{vipa}}/api/v1/books?page=0&size=5&sort=id
+  url: {{vipa}}/api/v1/books?page=0&size=5&sort=createdDate
   body: none
   auth: inherit
 }
@@ -13,7 +13,7 @@ get {
 params:query {
   page: 0
   size: 5
-  sort: id
+  sort: createdDate
 }
 
 settings {

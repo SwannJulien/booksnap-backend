@@ -3,10 +3,9 @@ package net.booksnap.domain.copy.repository;
 import net.booksnap.domain.copy.Copy;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CopyRepository extends JpaRepository<Copy, Long> {
+import java.util.List;
 
-    // Additional query methods can be defined here if needed
-    // For example, to find copies by book ID or status:
-    // List<Copy> findByBookId(Long bookId);
+public interface CopyRepository extends JpaRepository<Copy, Long> {
+     List<Copy> findAllByBookId(Long bookId);
     // List<Copy> findByStatus(Status status);
 }

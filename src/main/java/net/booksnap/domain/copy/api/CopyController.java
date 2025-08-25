@@ -2,6 +2,8 @@ package net.booksnap.domain.copy.api;
 
 import lombok.extern.slf4j.Slf4j;
 import jakarta.validation.Valid;
+import net.booksnap.domain.copy.Copy;
+import net.booksnap.domain.copy.api.dto.CopyResponse;
 import net.booksnap.domain.copy.api.dto.CreateCopyRequest;
 import net.booksnap.domain.copy.api.dto.UpdateCopyRequest;
 import net.booksnap.domain.copy.service.CopyService;
@@ -12,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController

@@ -1,11 +1,15 @@
 package net.booksnap.domain.book.service;
 
+import lombok.extern.slf4j.Slf4j;
 import net.booksnap.domain.book.Book;
 import net.booksnap.domain.book.api.dto.BookResponse;
 import net.booksnap.domain.book.api.dto.CreateBookRequest;
 import net.booksnap.domain.book.mapper.BookApiMapper;
 import net.booksnap.domain.book.repository.BookRepository;
+import net.booksnap.domain.common.dto.ListResponse;
 import net.booksnap.domain.copy.Copy;
+import net.booksnap.domain.copy.api.dto.CopyResponse;
+import net.booksnap.domain.copy.mapper.CopyApiMapper;
 import net.booksnap.domain.copy.repository.CopyRepository;
 import net.booksnap.domain.copy.Status;
 import net.booksnap.exception.book.BookNotFoundException;
@@ -21,23 +25,30 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
 @Service
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final BookApiMapper bookApiMapper;
     private final CopyRepository copyRepository;
+    private final CopyApiMapper copyApiMapper;
     private final QRCodeService qrCodeService;
     private final Utils utils;
 
     public BookServiceImpl(BookRepository bookRepository,
                            BookApiMapper bookApiMapper,
                            CopyRepository copyRepository,
+                           CopyApiMapper copyApiMapper,
                            QRCodeService qrCodeService,
                            Utils utils) {
         this.bookRepository = bookRepository;
         this.bookApiMapper = bookApiMapper;
         this.copyRepository = copyRepository;
+        this.copyApiMapper = copyApiMapper;
         this.qrCodeService = qrCodeService;
         this.utils = utils;
     }
@@ -89,6 +100,23 @@ public class BookServiceImpl implements BookService {
     public Page<BookResponse> findAllBooks(Pageable pageable) {
         Page<Book> bookPage = bookRepository.findAll(pageable);
         return bookPage.map(bookApiMapper::bookEntityToBookResponse);
+    }
+
+    public ListResponse<CopyResponse> findAllBookCopies(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow( () -> new BookNotFoundException(bookId));
+        if (book != null) {
+            log.info("Finding copies for book: {} - {}", book.getId(), book.getTitle());
+            List<Copy> copies = copyRepository.findAllByBookId(bookId);
+
+            List<CopyResponse> copyResponses = new ArrayList<CopyResponse>();
+            for (Copy copy : copies){
+                log.info("Found copy: {} - Status: {}", copy.getId(), copy.getStatus());
+                CopyResponse response = copyApiMapper.copyToResponse(copy);
+                copyResponses.add(response);
+            }
+            return new ListResponse<>(copyResponses);
+        } else throw new RuntimeException();
     }
 
     public void deleteBookById(Long bookId) {
