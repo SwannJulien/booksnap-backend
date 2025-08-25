@@ -4,6 +4,8 @@ import net.booksnap.domain.book.Book;
 import net.booksnap.domain.book.api.dto.BookResponse;
 import net.booksnap.domain.book.api.dto.CreateBookRequest;
 import net.booksnap.domain.book.service.BookService;
+import net.booksnap.domain.common.dto.ListResponse;
+import net.booksnap.domain.copy.api.dto.CopyResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 
 @RestController
@@ -47,6 +51,11 @@ public class BookController {
             Pageable pageable) {
 
         return bookService.findAllBooks(pageable);
+    }
+
+    @GetMapping("/{bookId}/copies")
+    public ListResponse<CopyResponse> getAllBookCopies(@PathVariable Long bookId){
+        return bookService.findAllBookCopies(bookId);
     }
 
     @DeleteMapping("/{bookId}")
