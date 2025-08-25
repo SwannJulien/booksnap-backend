@@ -1,7 +1,10 @@
 package net.booksnap.domain.book.service;
 
+import net.booksnap.domain.book.Book;
 import net.booksnap.domain.book.api.dto.BookResponse;
 import net.booksnap.domain.book.api.dto.CreateBookRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BookService {
     void addBook(CreateBookRequest createBookRequest);
@@ -13,4 +16,6 @@ public interface BookService {
     void deleteBookById(Long bookId);
 
     void updateBook(Long bookId, CreateBookRequest request);
+
+    Page<BookResponse> findAllBooks(Pageable pageable);
 }
