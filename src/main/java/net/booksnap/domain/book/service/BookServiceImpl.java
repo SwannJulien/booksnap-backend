@@ -16,6 +16,9 @@ import net.booksnap.domain.library.Library;
 import net.booksnap.domain.cover.Cover;
 import net.booksnap.utils.qr.QRCodeService;
 import net.booksnap.utils.Utils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -81,6 +84,11 @@ public class BookServiceImpl implements BookService {
         } catch (Exception e) {
             throw new RuntimeException("Error filtering fields: " + e.getMessage(), e);
         }
+    }
+
+    public Page<BookResponse> findAllBooks(Pageable pageable) {
+        Page<Book> bookPage = bookRepository.findAll(pageable);
+        return bookPage.map(bookApiMapper::bookEntityToBookResponse);
     }
 
     public void deleteBookById(Long bookId) {

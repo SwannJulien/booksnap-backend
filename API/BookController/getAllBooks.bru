@@ -1,0 +1,21 @@
+meta {
+  name: getAllBooks
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{vipa}}/api/v1/books?page=0&size=5&sort=id
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 0
+  size: 5
+  sort: id
+}
+
+settings {
+  encodeUrl: true
+}
