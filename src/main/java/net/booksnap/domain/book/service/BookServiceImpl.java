@@ -25,7 +25,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -103,20 +102,19 @@ public class BookServiceImpl implements BookService {
     }
 
     public ListResponse<CopyResponse> findAllBookCopies(Long bookId) {
+        // Validate book exists - will throw BookNotFoundException if not found
         Book book = bookRepository.findById(bookId)
-                .orElseThrow( () -> new BookNotFoundException(bookId));
-        if (book != null) {
-            log.info("Finding copies for book: {} - {}", book.getId(), book.getTitle());
-            List<Copy> copies = copyRepository.findAllByBookId(bookId);
-
-            List<CopyResponse> copyResponses = new ArrayList<CopyResponse>();
-            for (Copy copy : copies){
-                log.info("Found copy: {} - Status: {}", copy.getId(), copy.getStatus());
-                CopyResponse response = copyApiMapper.copyToResponse(copy);
-                copyResponses.add(response);
-            }
-            return new ListResponse<>(copyResponses);
-        } else throw new RuntimeException();
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+        log.debug("Finding copies for book: {} - {}", book.getId(), book.getTitle());
+        
+        List<Copy> copies = copyRepository.findAllByBookId(bookId);
+        log.debug("Found {} copies for book ID: {}", copies.size(), bookId);
+        
+        List<CopyResponse> copyResponses = copies.stream()
+                .map(copyApiMapper::copyToResponse)
+                .toList();
+        
+        return new ListResponse<>(copyResponses);
     }
 
     public void deleteBookById(Long bookId) {
