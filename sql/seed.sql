@@ -1,3 +1,5 @@
+INSERT INTO library (name) VALUES ('Preschool'),('Primary');
+
 -- Class level: 0-10
 INSERT INTO dewey_class (code, name) VALUES
 ('000', 'Computer science, information, and general works'),
