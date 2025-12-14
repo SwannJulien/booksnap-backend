@@ -151,7 +151,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private void updateBookCovers(Book book, CreateBookRequest request) {
-        if (request.cover().link() != null && request.cover().size() != null) {
+        if (request.cover() != null && request.cover().link() != null && request.cover().size() != null) {
             // Find existing cover with the same size or create new one
             Cover existingCover = book.getCovers().stream()
                     .filter(cover -> request.cover().size().equals(cover.getSize()))

@@ -77,7 +77,7 @@ public abstract class BookApiMapper {
 
     @AfterMapping
     public void mapCoversToEntity(@MappingTarget Book book, CreateBookRequest request) {
-        if (request.cover().link() != null && request.cover().size() != null) {
+        if (request.cover() != null && request.cover().link() != null && request.cover().size() != null) {
             Set<Cover> covers = new HashSet<>();
             Cover cover = new Cover();
             cover.setSize(request.cover().size());
