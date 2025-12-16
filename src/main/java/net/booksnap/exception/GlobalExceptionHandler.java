@@ -1,6 +1,7 @@
 package net.booksnap.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import net.booksnap.exception.book.BookAlreadyExistsException;
 import net.booksnap.exception.book.BookNotFoundException;
 import net.booksnap.exception.common.BadRequestException;
 import net.booksnap.exception.copy.CopyNotFoundException;
@@ -83,6 +84,17 @@ public class GlobalExceptionHandler {
                 request.getRequestURI()
         );
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BookAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleBookAlreadyExists(BookAlreadyExistsException ex, HttpServletRequest request) {
+        ApiError error = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(CopyNotFoundException.class)

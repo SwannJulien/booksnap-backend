@@ -3,6 +3,7 @@ package net.booksnap.domain.book.api;
 import net.booksnap.domain.book.Book;
 import net.booksnap.domain.book.api.dto.BookResponse;
 import net.booksnap.domain.book.api.dto.CreateBookRequest;
+import net.booksnap.domain.book.api.dto.CreateBookResponse;
 import net.booksnap.domain.book.service.BookService;
 import net.booksnap.domain.common.dto.ListResponse;
 import net.booksnap.domain.copy.api.dto.CopyResponse;
@@ -31,8 +32,8 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void addNewBook(@RequestBody @Valid CreateBookRequest request) {
-        bookService.addBook(request);
+    public CreateBookResponse addNewBook(@RequestBody @Valid CreateBookRequest request) {
+        return bookService.addBook(request);
     }
 
     @GetMapping("/{bookId}")

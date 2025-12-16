@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.booksnap.domain.book.Book;
 import net.booksnap.domain.book.api.dto.BookResponse;
 import net.booksnap.domain.book.api.dto.CreateBookRequest;
+import net.booksnap.domain.book.api.dto.CreateBookResponse;
 import net.booksnap.domain.book.mapper.BookApiMapper;
 import net.booksnap.domain.book.repository.BookRepository;
+import net.booksnap.exception.book.BookAlreadyExistsException;
 import net.booksnap.domain.common.dto.ListResponse;
 import net.booksnap.domain.copy.Copy;
 import net.booksnap.domain.copy.api.dto.CopyResponse;
@@ -51,9 +53,28 @@ public class BookServiceImpl implements BookService {
         this.qrCodeService = qrCodeService;
         this.utils = utils;
     }
-
-    public void addBook(CreateBookRequest createBookRequest) {
+    public CreateBookResponse addBook(CreateBookRequest createBookRequest) {
         try {
+            // Check if book already exists by ISBN10, ISBN13, or title
+            if (createBookRequest.isbn10() != null && !createBookRequest.isbn10().isEmpty()) {
+                bookRepository.findByIsbn10(createBookRequest.isbn10())
+                    .ifPresent(book -> {
+                        throw new BookAlreadyExistsException("ISBN-10: " + createBookRequest.isbn10());
+                    });
+            }
+
+            if (createBookRequest.isbn13() != null && !createBookRequest.isbn13().isEmpty()) {
+                bookRepository.findByIsbn13(createBookRequest.isbn13())
+                    .ifPresent(book -> {
+                        throw new BookAlreadyExistsException("ISBN-13: " + createBookRequest.isbn13());
+                    });
+            }
+
+            bookRepository.findByTitleIgnoreCase(createBookRequest.title())
+                .ifPresent(book -> {
+                    throw new BookAlreadyExistsException("Title: " + createBookRequest.title());
+                });
+
             Book book = bookApiMapper.createRequestToBookEntity(createBookRequest);
             Book savedBook = bookRepository.save(book);
 
@@ -64,14 +85,26 @@ public class BookServiceImpl implements BookService {
             copy.setCodeIdentification("TEMP"); // Temporary placeholder to satisfy @NotNull
             copy.setCreatedBy(savedBook.getCreatedBy());
             copy.setLastModifiedBy(savedBook.getLastModifiedBy());
-            
+
             Copy savedCopy = copyRepository.save(copy);
-            
+
             // Generate QR code identification after saving to get the ID
             String qrCodeIdentification = qrCodeService.generateCopyIdentificationCode(savedCopy);
             savedCopy.setCodeIdentification(qrCodeIdentification);
-            copyRepository.save(savedCopy);
-            
+            savedCopy = copyRepository.save(savedCopy);
+
+            // Generate QR code image
+            byte[] qrCode = qrCodeService.generateCopyQRCode(savedCopy);
+
+            return new CreateBookResponse(
+                qrCode,
+                qrCodeIdentification,
+                savedCopy.getId(),
+                savedBook.getId()
+            );
+
+        } catch (BookAlreadyExistsException ex) {
+            throw ex; // Re-throw to be handled by GlobalExceptionHandler
         } catch (Exception ex) {
             if (ex.getMessage().contains("non_fiction_requires_dewey")) {
                 throw new FictionBookHasDeweyCodeException();
